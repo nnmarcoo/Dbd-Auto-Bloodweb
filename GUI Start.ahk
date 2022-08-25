@@ -1,7 +1,10 @@
-﻿Gui, Add, Button, x311 y420 Default gStart, Start
-Gui,Add,Tab3,x10 y10 w340 h405 ,Items|Offerings ;create a tab control Flashlight|Medkit|Toolbox|Key|Map
+﻿IniRead, Items, %A_ScriptDir%\src\lib\Settings.ini, Items
+msgbox % Items
+
+Gui, Add, Button, x311 y420 Default gStart, Start
+Gui, Add,Tab3,x10 y10 w340 h405 ,Items|Offerings ;create a tab control Flashlight|Medkit|Toolbox|Key|Map
 Gui, Font, S15 cRed Bold, Verdana
-Gui,Color, c9c9c9
+Gui, Color, c9c9c9
 check := Chr(0x2714) ; ✔
 x := Chr(0x2716) ; ✖
 
