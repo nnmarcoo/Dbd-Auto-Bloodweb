@@ -7,12 +7,13 @@
 ;add pages for addons and offerings tab using buttons
 
 Global Items := Initialize("Items")
+Global Addons := Initialize("Addons")
+Global AddonsPage := 0
+Global OfferingsPage := 0
 Gui, Add, Button, x311 y420 Default gStart, Start
 Gui, Add,Tab3,x10 y10 w340 h405 ,Items|Addons|Offerings ;create a tab control Flashlight|Medkit|Toolbox|Key|Map
 Gui, Font, S15 cRed Bold, Verdana
 Gui, Color, c9c9c9
-check := Chr(0x2714) ; ✔
-x := Chr(0x2716) ; ✖
 ;### ITEMS START
 ;### COLUMN 1 BUTTONS
 Gui, Add, Button, w48 h48 gonClick vPFlashB
@@ -60,24 +61,92 @@ Update_Buttons(Items)
 ;### ITEMS END
 Gui,Tab,Addons
 ;### ADDONS START
-Gui,Show
+Gui, Add, Button, w48 h48 gonClick vPiBulbB
+Gui, Add, Button, w48 h48 gonClick vPLensB
+Gui, Add, Button, w48 h48 gonClick vGBatB
+Gui, Add, Button, w48 h48 gonClick vGBulbB
+Gui, Add, Button, w48 h48 gonClick vYFilaB
+Gui, Add, Button, w48 h48 gonClick vYBatB
+Gui, Add, Button, w48 h48 gonPage vAddonsB, 🢀
+;###COLUMN 2 IMAGES
+Gui, Add, Pic, w48 h48 x75 y38, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_oddBulb.png
+Gui, Add, Pic, w48 h48 x75 y92, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_high-EndSapphireLens.png
+Gui, Add, Pic, w48 h48 x75 y145, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_longLifeBattery.png
+Gui, Add, Pic, w48 h48 x75 y200, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_intenseHalogen.png
+Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_lowAmpFilament.png
+Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_heavyDutyBattery.png
+Gui, Add, Pic, w48 h48,
+;###COLUMN 3 BUTTONS
+Gui, Add, Button, x130 y38 w48 h48 gonClick vYGripB
+Gui, Add, Button, w48 h48 gonClick vYOpticB
+Gui, Add, Button, w48 h48 gonClick vYLensB
+Gui, Add, Button, w48 h48 gonClick vBBatB
+Gui, Add, Button, w48 h48 gonClick vBBulbB
+Gui, Add, Button, w48 h48 gonClick vBLensB
+Gui, Add, Button, w48 h48 gonClick vYSpongeB ;extra button
+;###COLUMN 4 IMAGES
+Gui, Add, Pic, w48 h48 x183 y38, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_rubberGrip.png
+Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_tirOptic.png
+Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_focusLens.png
+Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_battery.png
+Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_powerBulb.png
+Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_wideLens.png
+Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Medkit\FulliconAddon_sponge.png
+;###COLUMN 5 BUTTONS
+Gui, Add, Button, x237 y38 w48 h48 gonClick vPiSyB
+Gui, Add, Button, w48 h48 gonClick vPAgentB
+Gui, Add, Button, w48 h48 gonClick vGADressB
+Gui, Add, Button, w48 h48 gonClick vGDressB
+Gui, Add, Button, w48 h48 gonClick vGSutureB
+Gui, Add, Button, w48 h48 gonClick vYRollB
+Gui, Add, Button, x290 y361 w48 h48 gonPage vAddonsB2, 🢂
+;###COLUMN 6 IMAGES
+Gui, Add, Pic, w48 h48 x290 y38, %A_ScriptDir%\src\Addon\Medkit\FulliconAddon_anti-haemorrhagicSyringe.png
+Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Medkit\FulliconAddon_stypticAgent.png
+Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Medkit\FulliconAddon_abdominalDressing.png
+Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Medkit\FulliconAddon_gelDressings.png
+Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Medkit\FulliconAddon_surgicalSuture.png
+Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Medkit\FulliconAddon_gauzeRoll.png
+Update_Buttons(Addons)
+;### ITEMS END
+Gui,Show,, AutoBloodweb
 Return
 Start:
 Return
 
-onClick() {
+onClick() { ; handle clicking checkbox
     GuiControlGet, ch,, % A_GuiControl ; get state of button
     ch := Toggle_Char(ch) ; prepare to toggle state
     GuiControl ,, %A_GuiControl%, %ch% ; toggle state of button
 
+    Selected := SubStr(A_GuiControl, 1, StrLen(A_GuiControl)-1)
+    if (Selected in Addons)
+        Addons[Selected] := Toggle_Val(Addons[Selected])
+    else if (Selected in Items)
+        Items[Selected] := Toggle_Val(Items[Selected])
+}
 
-    ; add if var in Items, do this
-    Item := SubStr(A_GuiControl, 1, StrLen(A_GuiControl)-1) ; set Item to refrence in dictionary
-    Items[Item] := Toggle_Val(Items[Item]) ; toggle value in dictionary
+onPage() { ; handle cycling pages
+    if (A_GuiControl = "AddonsB") {
+        AddonsPage += A_GuiControl = Chr(0x1F880) ? -1 : 1 ; if left arrow is clicked, -1, otherwise +1
+        if AddonsPage < 0
+            AddonsPage := 2
+        else if AddonsPage > 2
+            AddonsPage := 0
+    }
+    else {
+        OfferingsPage += A_GuiControl = Chr(0x1F880) ? -1 : 1 ; if left arrow is clicked, -1, otherwise +1
+        if OfferingsPage < 0
+            OfferingsPage := 3
+        else if OfferingsPage > 3
+            OfferingsPage := 0
+    }
+    Update_Page(SubStr(A_GuiControl, 1, StrLen(A_GuiControl)-1))
 }
 
 guiclose:
     Ini_Write("Items")
+    Ini_Write("Addons")
     ExitApp
 Return
 
@@ -92,6 +161,11 @@ Update_Buttons(Buttons) {
         key := key . "B"
         GuiControl ,, %key%, %ch%
     }
+}
+
+Update_Page(Page) {
+    ControlGet, var, visible,, B, AutoBloodweb
+    msgbox % var
 }
 
 Toggle_Char(ch) {
@@ -112,8 +186,7 @@ Toggle_Val(x) {
     return 0
 }
 
-Obj2Str(obj) 
-{
+Obj2Str(obj) {
 	For k,v in obj
 		Str .= k " = " v "`n"
 	return RTrim(Str, "`n")
