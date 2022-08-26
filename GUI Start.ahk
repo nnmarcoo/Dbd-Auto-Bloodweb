@@ -4,6 +4,7 @@
 ;finish search algo
 ;add perks? checkbox
 ;add event items checkbox
+;add pages for addons and offerings tab using buttons
 
 Global Items := Initialize("Items")
 Gui, Add, Button, x311 y420 Default gStart, Start
