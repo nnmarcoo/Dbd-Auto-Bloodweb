@@ -120,22 +120,24 @@ onClick() { ; handle clicking checkbox
     GuiControl ,, %A_GuiControl%, %ch% ; toggle state of button
 
     Selected := SubStr(A_GuiControl, 1, StrLen(A_GuiControl)-1)
-    if (Selected in Addons)
+    if (HasKey(Addons, Selected))
         Addons[Selected] := Toggle_Val(Addons[Selected])
-    else if (Selected in Items)
+    else if (HasKey(Items, Selected))
         Items[Selected] := Toggle_Val(Items[Selected])
 }
 
 onPage() { ; handle cycling pages
-    if (A_GuiControl = "AddonsB") {
-        AddonsPage += A_GuiControl = Chr(0x1F880) ? -1 : 1 ; if left arrow is clicked, -1, otherwise +1
+    if (A_GuiControl = "AddonsB" or A_GuiControl = "AddonsB2") {
+        GuiControlGet, ch,, % A_GuiControl
+        AddonsPage += ch = Chr(0x1F880) ? -1 : 1 ; if left arrow is clicked, -1, otherwise +1
         if AddonsPage < 0
             AddonsPage := 2
         else if AddonsPage > 2
             AddonsPage := 0
     }
     else {
-        OfferingsPage += A_GuiControl = Chr(0x1F880) ? -1 : 1 ; if left arrow is clicked, -1, otherwise +1
+        GuiControlGet, ch,, % A_GuiControl
+        OfferingsPage += ch = Chr(0x1F880) ? -1 : 1 ; if left arrow is clicked, -1, otherwise +1
         if OfferingsPage < 0
             OfferingsPage := 3
         else if OfferingsPage > 3
@@ -164,8 +166,10 @@ Update_Buttons(Buttons) {
 }
 
 Update_Page(Page) {
-    ControlGet, var, visible,, B, AutoBloodweb
-    msgbox % var
+    for key, value in %Page% {
+        key := key . "B"
+        GuiControl, Hide, %key%
+    }
 }
 
 Toggle_Char(ch) {
@@ -198,4 +202,12 @@ Initialize(Category) {
     For each, line in StrSplit(var, "`n")
     part := StrSplit(line, "="), out[part.1] := part.2
     return out
+}
+
+HasKey(haystack, needle) {
+	for k, v in haystack {
+      if (k = needle)
+         return 1
+   }
+   return 0
 }
