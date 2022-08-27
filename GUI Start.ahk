@@ -11,9 +11,10 @@ Global Addons := Initialize("Addons")
 Global AddonsPage := 0
 Global OfferingsPage := 0
 Gui, Add, Button, x311 y420 Default gStart, Start
-Gui, Add,Tab3,x10 y10 w340 h405 ,Items|Addons|Offerings ;create a tab control Flashlight|Medkit|Toolbox|Key|Map
+Gui, Add,Tab3,x10 y10 w340 h405 vTabName gTabChange,Items|Addons|Offerings ;create a tab control Flashlight|Medkit|Toolbox|Key|Map
 Gui, Font, S15 cRed Bold, Verdana
 Gui, Color, c9c9c9
+
 ;### ITEMS START
 ;### COLUMN 1 BUTTONS
 Gui, Add, Button, w48 h48 gonClick vPFlashB
@@ -60,7 +61,7 @@ Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Item\Map\Green.png
 Update_Buttons(Items)
 ;### ITEMS END
 Gui,Tab,Addons
-;### ADDONS START
+;### ADDONS START --- PAGE 1
 Gui, Add, Button, w48 h48 gonClick vPiBulbB
 Gui, Add, Button, w48 h48 gonClick vPLensB
 Gui, Add, Button, w48 h48 gonClick vGBatB
@@ -69,13 +70,13 @@ Gui, Add, Button, w48 h48 gonClick vYFilaB
 Gui, Add, Button, w48 h48 gonClick vYBatB
 Gui, Add, Button, w48 h48 gonPage vAddonsB, 🢀
 ;###COLUMN 2 IMAGES
-Gui, Add, Pic, w48 h48 x75 y38, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_oddBulb.png
-Gui, Add, Pic, w48 h48 x75 y92, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_high-EndSapphireLens.png
-Gui, Add, Pic, w48 h48 x75 y145, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_longLifeBattery.png
-Gui, Add, Pic, w48 h48 x75 y200, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_intenseHalogen.png
-Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_lowAmpFilament.png
-Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_heavyDutyBattery.png
-Gui, Add, Pic, w48 h48,
+Gui, Add, Pic, w48 h48 x75 y38 vPiBulbI, %A_ScriptDir%\src\Addon\Flashlight\PiBulb.png
+Gui, Add, Pic, w48 h48 x75 y92 vPLensI, %A_ScriptDir%\src\Addon\Flashlight\PLens.png
+Gui, Add, Pic, w48 h48 x75 y145 vGBatI, %A_ScriptDir%\src\Addon\Flashlight\GBat.png
+Gui, Add, Pic, w48 h48 x75 y200 vGBulbI, %A_ScriptDir%\src\Addon\Flashlight\GBulb.png
+Gui, Add, Pic, w48 h48 vYFilaI, %A_ScriptDir%\src\Addon\Flashlight\YFila.png
+Gui, Add, Pic, w48 h48 vYBatI, %A_ScriptDir%\src\Addon\Flashlight\YBat.png
+;Gui, Add, Pic, w48 h48,
 ;###COLUMN 3 BUTTONS
 Gui, Add, Button, x130 y38 w48 h48 gonClick vYGripB
 Gui, Add, Button, w48 h48 gonClick vYOpticB
@@ -85,13 +86,13 @@ Gui, Add, Button, w48 h48 gonClick vBBulbB
 Gui, Add, Button, w48 h48 gonClick vBLensB
 Gui, Add, Button, w48 h48 gonClick vYSpongeB ;extra button
 ;###COLUMN 4 IMAGES
-Gui, Add, Pic, w48 h48 x183 y38, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_rubberGrip.png
-Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_tirOptic.png
-Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_focusLens.png
-Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_battery.png
-Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_powerBulb.png
-Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Flashlight\FulliconAddon_wideLens.png
-Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Medkit\FulliconAddon_sponge.png
+Gui, Add, Pic, w48 h48 x183 y38 vYGripI, %A_ScriptDir%\src\Addon\Flashlight\YGrip.png
+Gui, Add, Pic, w48 h48 vYOpticI, %A_ScriptDir%\src\Addon\Flashlight\YOptic.png
+Gui, Add, Pic, w48 h48 vYLensI, %A_ScriptDir%\src\Addon\Flashlight\YLens.png
+Gui, Add, Pic, w48 h48 vBBatI, %A_ScriptDir%\src\Addon\Flashlight\BBat.png
+Gui, Add, Pic, w48 h48 vBBulbI, %A_ScriptDir%\src\Addon\Flashlight\BBulb.png
+Gui, Add, Pic, w48 h48 vBLensI, %A_ScriptDir%\src\Addon\Flashlight\BLens.png
+Gui, Add, Pic, w48 h48 vYSpongeI, %A_ScriptDir%\src\Addon\Medkit\YSponge.png
 ;###COLUMN 5 BUTTONS
 Gui, Add, Button, x237 y38 w48 h48 gonClick vPiSyB
 Gui, Add, Button, w48 h48 gonClick vPAgentB
@@ -101,14 +102,29 @@ Gui, Add, Button, w48 h48 gonClick vGSutureB
 Gui, Add, Button, w48 h48 gonClick vYRollB
 Gui, Add, Button, x290 y361 w48 h48 gonPage vAddonsB2, 🢂
 ;###COLUMN 6 IMAGES
-Gui, Add, Pic, w48 h48 x290 y38, %A_ScriptDir%\src\Addon\Medkit\FulliconAddon_anti-haemorrhagicSyringe.png
-Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Medkit\FulliconAddon_stypticAgent.png
-Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Medkit\FulliconAddon_abdominalDressing.png
-Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Medkit\FulliconAddon_gelDressings.png
-Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Medkit\FulliconAddon_surgicalSuture.png
-Gui, Add, Pic, w48 h48, %A_ScriptDir%\src\Addon\Medkit\FulliconAddon_gauzeRoll.png
+Gui, Add, Pic, w48 h48 x290 y38 vPiSyI, %A_ScriptDir%\src\Addon\Medkit\PiSy.png
+Gui, Add, Pic, w48 h48 vPAgentI, %A_ScriptDir%\src\Addon\Medkit\PAgent.png
+Gui, Add, Pic, w48 h48 vGADressI, %A_ScriptDir%\src\Addon\Medkit\GADress.png
+Gui, Add, Pic, w48 h48 vGDressI, %A_ScriptDir%\src\Addon\Medkit\GDress.png
+Gui, Add, Pic, w48 h48 vGSutureI, %A_ScriptDir%\src\Addon\Medkit\GSuture.png
+Gui, Add, Pic, w48 h48 vYRollI, %A_ScriptDir%\src\Addon\Medkit\YRoll.png
+;### ADDONS START --- PAGE 2
+Gui, Add, Button, w48 h48 x22 y38 gonClick hidden vYScissorB
+Gui, Add, Button, w48 h48 gonClick hidden vYThreadB
+Gui, Add, Button, w48 h48 gonClick hidden vYWrapB
+Gui, Add, Button, w48 h48 gonClick hidden vBBandB
+Gui, Add, Button, w48 h48 gonClick hidden vBTapeB
+Gui, Add, Button, w48 h48 gonClick hidden vBGloveB
+;###COLUMN 2 IMAGES --- PAGE 2
+Gui, Add, Pic, w48 h48 x75 y38 vYScissorI hidden, %A_ScriptDir%\src\Addon\Medkit\YScissor.png
+Gui, Add, Pic, w48 h48 x75 y92 vYThreadI hidden, %A_ScriptDir%\src\Addon\Medkit\YThread.png
+Gui, Add, Pic, w48 h48 x75 y145 vYWrapI hidden, %A_ScriptDir%\src\Addon\Medkit\YWrap.png
+Gui, Add, Pic, w48 h48 x75 y200 vBBandI hidden, %A_ScriptDir%\src\Addon\Medkit\BBand.png
+Gui, Add, Pic, w48 h48 vBTapeI hidden, %A_ScriptDir%\src\Addon\Medkit\BTape.png
+Gui, Add, Pic, w48 h48 vBGloveI hidden, %A_ScriptDir%\src\Addon\Medkit\BGlove.png
+
 Update_Buttons(Addons)
-;### ITEMS END
+;### ADDONS END
 Gui,Show,, AutoBloodweb
 Return
 Start:
@@ -127,13 +143,14 @@ onClick() { ; handle clicking checkbox
 }
 
 onPage() { ; handle cycling pages
-    if (A_GuiControl = "AddonsB" or A_GuiControl = "AddonsB2") {
+    if (TabName = "Addons") {
         GuiControlGet, ch,, % A_GuiControl
         AddonsPage += ch = Chr(0x1F880) ? -1 : 1 ; if left arrow is clicked, -1, otherwise +1
         if AddonsPage < 0
             AddonsPage := 2
         else if AddonsPage > 2
             AddonsPage := 0
+        Update_Page("Addons", AddonsPage)
     }
     else {
         GuiControlGet, ch,, % A_GuiControl
@@ -142,19 +159,8 @@ onPage() { ; handle cycling pages
             OfferingsPage := 3
         else if OfferingsPage > 3
             OfferingsPage := 0
+        Update_Page("Offerings", OfferingsPage)
     }
-    Update_Page(SubStr(A_GuiControl, 1, StrLen(A_GuiControl)-1))
-}
-
-guiclose:
-    Ini_Write("Items")
-    Ini_Write("Addons")
-    ExitApp
-Return
-
-Ini_Write(Category) { ; pass in the name of the dictionary
-    for key, value in %Category%
-        IniWrite, %value%, %A_ScriptDir%\src\lib\Settings.ini, %Category%, %key%
 }
 
 Update_Buttons(Buttons) {
@@ -165,11 +171,26 @@ Update_Buttons(Buttons) {
     }
 }
 
-Update_Page(Page) {
+Update_Page(Page, PNum) { ; add all buttons that will be on pages
+    Pages := {"BBat":0, "BBulb":0, "BLens":0, "GADress":0, "GBat":0, "GBulb":0, "GDress":0, "GSuture":0, "PAgent":0, "PiBulb":0, "PiSy":0, "PLens":0, "YBat":0, "YFila":0, "YGrip":0, "YGrip":0, "YLens":0, "YOptic":0, "YRoll":0, "YSponge":0, "YScissor":1, "YThread":1, "YWrap":1, "BBand":1, "BTape":1, "BGlove":1}
     for key, value in %Page% {
-        key := key . "B"
-        GuiControl, Hide, %key%
+        Button := key . "B"
+        Image := key . "I"
+        if (Pages[key] = PNum) {
+            GuiControl, Show, %Button%
+            GuiControl, Show, %Image%
+        }
+        else {
+            GuiControl, Hide, %Button%
+            GuiControl, Hide, %Image%
+        }
     }
+}
+
+Toggle_Val(x) {
+    if (x = 0)
+        return 1
+    return 0
 }
 
 Toggle_Char(ch) {
@@ -184,10 +205,12 @@ Set_Char(x) {
     return Chr(0x2714)
 }
 
-Toggle_Val(x) {
-    if (x = 0)
-        return 1
-    return 0
+HasKey(haystack, needle) {
+	for k, v in haystack {
+      if (k = needle)
+         return 1
+   }
+   return 0
 }
 
 Obj2Str(obj) {
@@ -203,11 +226,18 @@ Initialize(Category) {
     part := StrSplit(line, "="), out[part.1] := part.2
     return out
 }
-
-HasKey(haystack, needle) {
-	for k, v in haystack {
-      if (k = needle)
-         return 1
-   }
-   return 0
+Ini_Write(Category) { ; pass in the name of the dictionary
+    for key, value in %Category%
+        IniWrite, %value%, %A_ScriptDir%\src\lib\Settings.ini, %Category%, %key%
 }
+
+guiclose:
+    Ini_Write("Items")
+    Ini_Write("Addons")
+    ExitApp
+Return
+
+TabChange:
+    Gui, submit, nohide
+    Global TabName
+Return
