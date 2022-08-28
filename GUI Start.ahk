@@ -62,7 +62,7 @@ Update_Buttons(Items)
 ;### ITEMS END
 Gui,Tab,Addons
 ;### ADDONS START --- PAGE 1
-Gui, Add, Button, w48 h48 gonClick vPiBulbB
+Gui, Add, Button, w48 h48 x22 y36 gonClick vPiBulbB
 Gui, Add, Button, w48 h48 gonClick vPLensB
 Gui, Add, Button, w48 h48 gonClick vGBatB
 Gui, Add, Button, w48 h48 gonClick vGBulbB
@@ -109,7 +109,7 @@ Gui, Add, Pic, w48 h48 vGDressI, %A_ScriptDir%\src\Addon\Medkit\GDress.png
 Gui, Add, Pic, w48 h48 vGSutureI, %A_ScriptDir%\src\Addon\Medkit\GSuture.png
 Gui, Add, Pic, w48 h48 vYRollI, %A_ScriptDir%\src\Addon\Medkit\YRoll.png
 ;### ADDONS START --- PAGE 2
-Gui, Add, Button, w48 h48 x22 y38 gonClick hidden vYScissorB
+Gui, Add, Button, w48 h48 x22 y36 gonClick hidden vYScissorB
 Gui, Add, Button, w48 h48 gonClick hidden vYThreadB
 Gui, Add, Button, w48 h48 gonClick hidden vYWrapB
 Gui, Add, Button, w48 h48 gonClick hidden vBBandB
@@ -131,14 +131,65 @@ Gui, Add, Button, w48 h48 gonClick hidden vYClampB
 Gui, Add, Button, w48 h48 gonClick hidden vYPGloveB
 Gui, Add, Button, w48 h48 gonClick hidden vYSocketB ;extra button
 ;###COLUMN 4 IMAGES --- PAGE 2
-Gui, Add, Pic, w48 h48 x183 y38 vPiCogI, %A_ScriptDir%\src\Addon\Toolbox\PiCog.png
-Gui, Add, Pic, w48 h48 vGWrenchI, %A_ScriptDir%\src\Addon\Toolbox\GWrench.png
-Gui, Add, Pic, w48 h48 vGHackI, %A_ScriptDir%\src\Addon\Toolbox\GHack.png
-Gui, Add, Pic, w48 h48 vYCutWireI, %A_ScriptDir%\src\Addon\Toolbox\YCutWire.png
-Gui, Add, Pic, w48 h48 vYClampI, %A_ScriptDir%\src\Addon\Toolbox\YClamp.png
-Gui, Add, Pic, w48 h48 vYPGloveI, %A_ScriptDir%\src\Addon\Toolbox\YPGlove.png
-Gui, Add, Pic, w48 h48 vYSocketI, %A_ScriptDir%\src\Addon\Toolbox\YSocket.png
-
+Gui, Add, Pic, w48 h48 x183 y38 vPiCogI hidden, %A_ScriptDir%\src\Addon\Toolbox\PiCog.png
+Gui, Add, Pic, w48 h48 vGWrenchI hidden, %A_ScriptDir%\src\Addon\Toolbox\GWrench.png
+Gui, Add, Pic, w48 h48 vGHackI hidden, %A_ScriptDir%\src\Addon\Toolbox\GHack.png
+Gui, Add, Pic, w48 h48 vYCutWireI hidden, %A_ScriptDir%\src\Addon\Toolbox\YCutWire.png
+Gui, Add, Pic, w48 h48 vYClampI hidden, %A_ScriptDir%\src\Addon\Toolbox\YClamp.png
+Gui, Add, Pic, w48 h48 vYPGloveI hidden, %A_ScriptDir%\src\Addon\Toolbox\YPGlove.png
+Gui, Add, Pic, w48 h48 vYSocketI hidden, %A_ScriptDir%\src\Addon\Toolbox\YSocket.png
+;###COLUMN 5 BUTTONS --- PAGE 2
+Gui, Add, Button, x237 y38 w48 h48 gonClick hidden vYSpoolB
+Gui, Add, Button, w48 h48 gonClick hidden vBRagB
+Gui, Add, Button, w48 h48 gonClick hidden vBScrapB
+Gui, Add, Button, w48 h48 gonClick hidden vBInstructB
+Gui, Add, Button, w48 h48 gonClick hidden vPWRingB
+Gui, Add, Button, w48 h48 gonClick hidden vPRingB
+;###COLUMN 6 IMAGES --- PAGE 2
+Gui, Add, Pic, w48 h48 x290 y38 vYSpoolI hidden, %A_ScriptDir%\src\Addon\Toolbox\YSpool.png
+Gui, Add, Pic, w48 h48 vBRagI hidden, %A_ScriptDir%\src\Addon\Toolbox\BRag.png
+Gui, Add, Pic, w48 h48 vBScrapI hidden, %A_ScriptDir%\src\Addon\Toolbox\BScrap.png
+Gui, Add, Pic, w48 h48 vBInstructI hidden, %A_ScriptDir%\src\Addon\Toolbox\BInstruct.png
+Gui, Add, Pic, w48 h48 vPWRingI hidden, %A_ScriptDir%\src\Addon\Key\PWRing.png
+Gui, Add, Pic, w48 h48 vPRingI hidden, %A_ScriptDir%\src\Addon\Key\PRing.png
+;###COLUMN 1 BUTTONS --- PAGE 3
+Gui, Add, Button, w48 h48 x22 y36 gonClick hidden vPAmberB
+Gui, Add, Button, w48 h48 gonClick hidden vPGlassB
+Gui, Add, Button, w48 h48 gonClick hidden vGTokenB
+Gui, Add, Button, w48 h48 gonClick hidden vYETokenB
+Gui, Add, Button, w48 h48 gonClick hidden vYBeadsB
+Gui, Add, Button, w48 h48 gonClick hidden vYPearlB
+;###COLUMN 2 IMAGES --- PAGE 3
+Gui, Add, Pic, w48 h48 x75 y38 vPAmberI hidden, %A_ScriptDir%\src\Addon\Key\PAmber.png
+Gui, Add, Pic, w48 h48 x75 y92 vPGlassI hidden, %A_ScriptDir%\src\Addon\Key\PGlass.png
+Gui, Add, Pic, w48 h48 x75 y145 vGTokenI hidden, %A_ScriptDir%\src\Addon\Key\GToken.png
+Gui, Add, Pic, w48 h48 x75 y200 vYETokenI hidden, %A_ScriptDir%\src\Addon\Key\YEToken.png
+Gui, Add, Pic, w48 h48 vYBeadsI hidden, %A_ScriptDir%\src\Addon\Key\YBeads.png
+Gui, Add, Pic, w48 h48 vYPearlI hidden, %A_ScriptDir%\src\Addon\Key\YPearl.png
+;###COLUMN 3 BUTTONS --- PAGE 3
+Gui, Add, Button, x130 y38 w48 h48 gonClick hidden vBRopeB
+Gui, Add, Button, w48 h48 gonClick hidden vPBeadB
+Gui, Add, Button, w48 h48 gonClick hidden vGCordB
+Gui, Add, Button, w48 h48 gonClick hidden vGStampB
+Gui, Add, Button, w48 h48 gonClick hidden vYJellyB
+Gui, Add, Button, w48 h48 gonClick hidden vYBeadB
+Gui, Add, Button, w48 h48 gonClick hidden vYMWireB ;extra button
+;###COLUMN 4 IMAGES --- PAGE 3
+Gui, Add, Pic, w48 h48 x183 y38 vBRopeI hidden, %A_ScriptDir%\src\Addon\Key\BRope.png
+Gui, Add, Pic, w48 h48 vPBeadI hidden, %A_ScriptDir%\src\Addon\Map\PBead.png
+Gui, Add, Pic, w48 h48 vGCordI hidden, %A_ScriptDir%\src\Addon\Map\GCord.png
+Gui, Add, Pic, w48 h48 vGStampI hidden, %A_ScriptDir%\src\Addon\Map\GStamp.png
+Gui, Add, Pic, w48 h48 vYJellyI hidden, %A_ScriptDir%\src\Addon\Map\YJelly.png
+Gui, Add, Pic, w48 h48 vYBeadI hidden, %A_ScriptDir%\src\Addon\Map\YBead.png
+Gui, Add, Pic, w48 h48 vYMWireI hidden, %A_ScriptDir%\src\Addon\Map\YMWire.png
+;###COLUMN 5 BUTTONS --- PAGE 3
+Gui, Add, Button, x237 y38 w48 h48 gonClick hidden vYStampB
+Gui, Add, Button, w48 h48 gonClick hidden vYTwineB
+Gui, Add, Button, w48 h48 gonClick hidden vBAddendB
+;###COLUMN 6 IMAGES --- PAGE 3
+Gui, Add, Pic, w48 h48 x290 y38 vYStampI hidden, %A_ScriptDir%\src\Addon\Map\YStamp.png
+Gui, Add, Pic, w48 h48 vYTwineI hidden, %A_ScriptDir%\src\Addon\Map\YTwine.png
+Gui, Add, Pic, w48 h48 vBAddendI hidden, %A_ScriptDir%\src\Addon\Map\BAddend.png
 Update_Buttons(Addons)
 ;### ADDONS END
 Gui,Show,, AutoBloodweb
@@ -188,7 +239,7 @@ Update_Buttons(Buttons) {
 }
 
 Update_Page(Page, PNum) { ; add all buttons that will be on pages
-    Pages := {"BBat":0, "BBulb":0, "BLens":0, "GADress":0, "GBat":0, "GBulb":0, "GDress":0, "GSuture":0, "PAgent":0, "PiBulb":0, "PiSy":0, "PLens":0, "YBat":0, "YFila":0, "YGrip":0, "YGrip":0, "YLens":0, "YOptic":0, "YRoll":0, "YSponge":0, "YScissor":1, "YThread":1, "YWrap":1, "BBand":1, "BTape":1, "BGlove":1, "PiCog":1, "GWrench":1, "GHack":1, "YCutWire":1, "YClamp":1, "YPGlove":1, "YSocket":1}
+    Pages := {"BBat":0, "BBulb":0, "BLens":0, "GADress":0, "GBat":0, "GBulb":0, "GDress":0, "GSuture":0, "PAgent":0, "PiBulb":0, "PiSy":0, "PLens":0, "YBat":0, "YFila":0, "YGrip":0, "YGrip":0, "YLens":0, "YOptic":0, "YRoll":0, "YSponge":0, "YScissor":1, "YThread":1, "YWrap":1, "BBand":1, "BTape":1, "BGlove":1, "PiCog":1, "GWrench":1, "GHack":1, "YCutWire":1, "YClamp":1, "YPGlove":1, "YSocket":1, "YSpool":1, "BRag":1, "BInstruct":1, "BScrap":1, "YSpool":1, "BRag":1, "BScrap":1, "BInstruct":1, "PWRing":1, "PRing":1, "PAmber":2, "PGlass":2, "GToken":2, "YEToken":2, "YPearl":2, "YBeads":2, "BRope":2, "PBead":2, "GCord":2, "GStamp":2, "YJelly":2, "YBead":2, "YMWire":2,"YStamp":2,"YTwine":2,"BAddend":2}
     for key, value in %Page% {
         Button := key . "B"
         Image := key . "I"
@@ -241,7 +292,9 @@ Initialize(Category) {
     For each, line in StrSplit(var, "`n")
     part := StrSplit(line, "="), out[part.1] := part.2
     return out
+
 }
+
 Ini_Write(Category) { ; pass in the name of the dictionary
     for key, value in %Category%
         IniWrite, %value%, %A_ScriptDir%\src\lib\Settings.ini, %Category%, %key%
