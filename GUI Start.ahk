@@ -122,6 +122,22 @@ Gui, Add, Pic, w48 h48 x75 y145 vYWrapI hidden, %A_ScriptDir%\src\Addon\Medkit\Y
 Gui, Add, Pic, w48 h48 x75 y200 vBBandI hidden, %A_ScriptDir%\src\Addon\Medkit\BBand.png
 Gui, Add, Pic, w48 h48 vBTapeI hidden, %A_ScriptDir%\src\Addon\Medkit\BTape.png
 Gui, Add, Pic, w48 h48 vBGloveI hidden, %A_ScriptDir%\src\Addon\Medkit\BGlove.png
+;###COLUMN 3 BUTTONS --- PAGE 2
+Gui, Add, Button, x130 y38 w48 h48 gonClick hidden vPiCogB
+Gui, Add, Button, w48 h48 gonClick hidden vGWrenchB
+Gui, Add, Button, w48 h48 gonClick hidden vGHackB
+Gui, Add, Button, w48 h48 gonClick hidden vYCutWireB
+Gui, Add, Button, w48 h48 gonClick hidden vYClampB
+Gui, Add, Button, w48 h48 gonClick hidden vYPGloveB
+Gui, Add, Button, w48 h48 gonClick hidden vYSocketB ;extra button
+;###COLUMN 4 IMAGES --- PAGE 2
+Gui, Add, Pic, w48 h48 x183 y38 vPiCogI, %A_ScriptDir%\src\Addon\Toolbox\PiCog.png
+Gui, Add, Pic, w48 h48 vGWrenchI, %A_ScriptDir%\src\Addon\Toolbox\GWrench.png
+Gui, Add, Pic, w48 h48 vGHackI, %A_ScriptDir%\src\Addon\Toolbox\GHack.png
+Gui, Add, Pic, w48 h48 vYCutWireI, %A_ScriptDir%\src\Addon\Toolbox\YCutWire.png
+Gui, Add, Pic, w48 h48 vYClampI, %A_ScriptDir%\src\Addon\Toolbox\YClamp.png
+Gui, Add, Pic, w48 h48 vYPGloveI, %A_ScriptDir%\src\Addon\Toolbox\YPGlove.png
+Gui, Add, Pic, w48 h48 vYSocketI, %A_ScriptDir%\src\Addon\Toolbox\YSocket.png
 
 Update_Buttons(Addons)
 ;### ADDONS END
@@ -172,7 +188,7 @@ Update_Buttons(Buttons) {
 }
 
 Update_Page(Page, PNum) { ; add all buttons that will be on pages
-    Pages := {"BBat":0, "BBulb":0, "BLens":0, "GADress":0, "GBat":0, "GBulb":0, "GDress":0, "GSuture":0, "PAgent":0, "PiBulb":0, "PiSy":0, "PLens":0, "YBat":0, "YFila":0, "YGrip":0, "YGrip":0, "YLens":0, "YOptic":0, "YRoll":0, "YSponge":0, "YScissor":1, "YThread":1, "YWrap":1, "BBand":1, "BTape":1, "BGlove":1}
+    Pages := {"BBat":0, "BBulb":0, "BLens":0, "GADress":0, "GBat":0, "GBulb":0, "GDress":0, "GSuture":0, "PAgent":0, "PiBulb":0, "PiSy":0, "PLens":0, "YBat":0, "YFila":0, "YGrip":0, "YGrip":0, "YLens":0, "YOptic":0, "YRoll":0, "YSponge":0, "YScissor":1, "YThread":1, "YWrap":1, "BBand":1, "BTape":1, "BGlove":1, "PiCog":1, "GWrench":1, "GHack":1, "YCutWire":1, "YClamp":1, "YPGlove":1, "YSocket":1}
     for key, value in %Page% {
         Button := key . "B"
         Image := key . "I"
