@@ -245,10 +245,12 @@ Update_Page(Page, PNum) { ; add all buttons that will be on pages
         Image := key . "I"
         if (Pages[key] = PNum) {
             GuiControl, Show, %Button%
+            Sleep, 5 ;looks cool
             GuiControl, Show, %Image%
         }
         else {
             GuiControl, Hide, %Button%
+            Sleep, 5 ;looks cool
             GuiControl, Hide, %Image%
         }
     }
