@@ -5,6 +5,7 @@
 ;add perks? checkbox
 ;add event items checkbox
 ;add pages for addons and offerings tab using buttons
+#Include %A_ScriptDir%\src\lib\FindClick.ahk
 
 Global Items := Initialize("Items")
 Global Addons := Initialize("Addons")
@@ -254,7 +255,74 @@ Gui, Add, Pic, w48 h48 x75 y145 vGMLetterI hidden, %A_ScriptDir%\src\Offering\GM
 Gui, Add, Pic, w48 h48 x75 y200 vGRPDI hidden, %A_ScriptDir%\src\Offering\GRPD.png
 Gui, Add, Pic, w48 h48 vGGlassesI hidden, %A_ScriptDir%\src\Offering\GGlasses.png
 Gui, Add, Pic, w48 h48 vGRealtyKeyI hidden, %A_ScriptDir%\src\Offering\GRealtyKey.png
+;###COLUMN 3 BUTTONS --- PAGE 2
+Gui, Add, Button, x130 y38 w48 h48 gonClick hidden vGMaskB
+Gui, Add, Button, w48 h48 gonClick hidden vGPiperB
+Gui, Add, Button, w48 h48 gonClick hidden vGCrestB
+Gui, Add, Button, w48 h48 gonClick hidden vGSaltStatB
+Gui, Add, Button, w48 h48 gonClick hidden vGChalkB
+Gui, Add, Button, w48 h48 gonClick hidden vYCakeB
+Gui, Add, Button, w48 h48 gonClick hidden vYEnvelopeB
+;###COLUMN 4 IMAGES --- PAGE 2
+Gui, Add, Pic, w48 h48 x183 y38 vGMaskI hidden, %A_ScriptDir%\src\Offering\GMask.png ;x290 y38
+Gui, Add, Pic, w48 h48 vGPiperI hidden, %A_ScriptDir%\src\Offering\GPiper.png
+Gui, Add, Pic, w48 h48 vGCrestI hidden, %A_ScriptDir%\src\Offering\GCrest.png
+Gui, Add, Pic, w48 h48 vGSaltStatI hidden, %A_ScriptDir%\src\Offering\GSaltStat.png
+Gui, Add, Pic, w48 h48 vGChalkI hidden, %A_ScriptDir%\src\Offering\GChalk.png
+Gui, Add, Pic, w48 h48 vYCakeI hidden, %A_ScriptDir%\src\Offering\YCake.png
+Gui, Add, Pic, w48 h48 vYEnvelopeI hidden, %A_ScriptDir%\src\Offering\YEnvelope.png
+;###COLUMN 5 BUTTONS --- PAGE 2
+Gui, Add, Button, x237 y38 w48 h48 gonClick hidden vYLaurelB
+Gui, Add, Button, w48 h48 gonClick hidden vYAmaranthB
+Gui, Add, Button, w48 h48 gonClick hidden vYBlossomB
+Gui, Add, Button, w48 h48 gonClick hidden vYWilliamB
+Gui, Add, Button, w48 h48 gonClick hidden vYPouchB
+Gui, Add, Button, w48 h48 gonClick hidden vYChalkB
+;###COLUMN 6 IMAGES --- PAGE 2
+Gui, Add, Pic, w48 h48 x290 y38 vYLaurelI hidden, %A_ScriptDir%\src\Offering\YLaurel.png
+Gui, Add, Pic, w48 h48 vYAmaranthI hidden, %A_ScriptDir%\src\Offering\YAmaranth.png
+Gui, Add, Pic, w48 h48 vYBlossomI hidden, %A_ScriptDir%\src\Offering\YBlossom.png
+Gui, Add, Pic, w48 h48 vYWilliamI hidden, %A_ScriptDir%\src\Offering\YWilliam.png
+Gui, Add, Pic, w48 h48 vYPouchI hidden, %A_ScriptDir%\src\Offering\YPouch.png
+Gui, Add, Pic, w48 h48 vYChalkI hidden, %A_ScriptDir%\src\Offering\YChalk.png
+;###COLUMN 1 BUTTONS --- PAGE 3
+Gui, Add, Button, w48 h48 x22 y36 gonClick hidden vYShroudB
+Gui, Add, Button, w48 h48 gonClick hidden vYUnionB
+Gui, Add, Button, w48 h48 gonClick hidden vYCoinB
+Gui, Add, Button, w48 h48 gonClick hidden vYReagentB
+Gui, Add, Button, w48 h48 gonClick hidden vBLaurelB
+Gui, Add, Button, w48 h48 gonClick hidden vBAmaranthB
+;###COLUMN 2 IMAGES --- PAGE 3
+Gui, Add, Pic, w48 h48 x75 y38 vYShroudI hidden, %A_ScriptDir%\src\Offering\YShroud.png
+Gui, Add, Pic, w48 h48 x75 y92 vYUnionI hidden, %A_ScriptDir%\src\Offering\YUnion.png
+Gui, Add, Pic, w48 h48 x75 y145 vYCoinI hidden, %A_ScriptDir%\src\Offering\YCoin.png
+Gui, Add, Pic, w48 h48 x75 y200 vYReagentI hidden, %A_ScriptDir%\src\Offering\YReagent.png
+Gui, Add, Pic, w48 h48 vBLaurelI hidden, %A_ScriptDir%\src\Offering\BLaurel.png
+Gui, Add, Pic, w48 h48 vBAmaranthI hidden, %A_ScriptDir%\src\Offering\BAmaranth.png
+;###COLUMN 3 BUTTONS --- PAGE 3
+Gui, Add, Button, x130 y38 w48 h48 gonClick hidden vBBlossomB
+Gui, Add, Button, w48 h48 gonClick hidden vBWilliamB
+Gui, Add, Button, w48 h48 gonClick hidden vBTornB
+Gui, Add, Button, w48 h48 gonClick hidden vBVigoB
+Gui, Add, Button, w48 h48 gonClick hidden vBAnnoB
+Gui, Add, Button, w48 h48 gonClick hidden vBBHooksB
+Gui, Add, Button, w48 h48 gonClick hidden vBChalkB ;extra button
+;###COLUMN 4 IMAGES --- PAGE 3
+Gui, Add, Pic, w48 h48 x183 y38 vBBlossomI hidden, %A_ScriptDir%\src\Offering\BBlossom.png
+Gui, Add, Pic, w48 h48 vBWilliamI hidden, %A_ScriptDir%\src\Offering\BWilliam.png
+Gui, Add, Pic, w48 h48 vBTornI hidden, %A_ScriptDir%\src\Offering\BTorn.png
+Gui, Add, Pic, w48 h48 vBVigoI hidden, %A_ScriptDir%\src\Offering\BVigo.png
+Gui, Add, Pic, w48 h48 vBAnnoI hidden, %A_ScriptDir%\src\Offering\BAnno.png
+Gui, Add, Pic, w48 h48 vBBHooksI hidden, %A_ScriptDir%\src\Offering\BBHooks.png
+Gui, Add, Pic, w48 h48 vBChalkI hidden, %A_ScriptDir%\src\Offering\BChalk.png
 Gui,Show,, Auto Bloodweb
+;###COLUMN 5 BUTTONS --- PAGE 3
+Gui, Add, Button, x237 y38 w48 h48 gonClick hidden vBClearReagentB
+Gui, Add, Button, w48 h48 gonClick hidden vBFaintReagentB
+;###COLUMN 6 IMAGES --- PAGE 3
+Gui, Add, Pic, w48 h48 x290 y38 vBClearReagentI hidden, %A_ScriptDir%\src\Offering\BClearReagent.png
+Gui, Add, Pic, w48 h48 vBFaintReagentI hidden, %A_ScriptDir%\src\Offering\BFaintReagent.png
+;###OFFERINGS END
 Update_Buttons(Offerings)
 Return
 Start:
@@ -286,8 +354,8 @@ onPage() { ; handle cycling pages
         GuiControlGet, ch,, % A_GuiControl
         OfferingsPage += ch = Chr(0x1F880) ? -1 : 1 ; if left arrow is clicked, -1, otherwise +1
         if OfferingsPage < 0
-            OfferingsPage := 3
-        else if OfferingsPage > 3
+            OfferingsPage := 2
+        else if OfferingsPage > 2
             OfferingsPage := 0
         Update_Page("Offerings", OfferingsPage)
     }
@@ -302,18 +370,18 @@ Update_Buttons(Buttons) {
 }
 
 Update_Page(Page, PNum) { ; add all buttons that will be on pages
-    Pages := {"BBat":0, "BBulb":0, "BLens":0, "GADress":0, "GBat":0, "GBulb":0, "GDress":0, "GSuture":0, "PAgent":0, "PiBulb":0, "PiSy":0, "PLens":0, "YBat":0, "YFila":0, "YGrip":0, "YGrip":0, "YLens":0, "YOptic":0, "YRoll":0, "YSponge":0, "YScissor":1, "YThread":1, "YWrap":1, "BBand":1, "BTape":1, "BGlove":1, "PiCog":1, "GWrench":1, "GHack":1, "YCutWire":1, "YClamp":1, "YPGlove":1, "YSocket":1, "YSpool":1, "BRag":1, "BInstruct":1, "BScrap":1, "YSpool":1, "BRag":1, "BScrap":1, "BInstruct":1, "PWRing":1, "PRing":1, "PAmber":2, "PGlass":2, "GToken":2, "YEToken":2, "YPearl":2, "YBeads":2, "BRope":2, "PBead":2, "GCord":2, "GStamp":2, "YJelly":2, "YBead":2, "YMWire":2,"YStamp":2,"YTwine":2,"BAddend":2, "PWWard":0, "GPartyStream":0, "GEnvel":0, "GWilliam":0, "GLaurel":0, "GAmaranth":0, "PBinding":0, "GBlossom":0, "GWeddingPhoto":0, "GAKey":0, "GCrowE":0, "PLips":0, "GDamagePhoto":0, "GLocket":0, "GCookbook":0, "PCoin":0, "PReagent":0, "GNoose":0, "POak":0, "GJigsaw":1}
+    Pages := {"GMask":1,"GPiper":1,"GCrest":1,"BClearReagent":2,"BFaintReagent":2,"YShroud":2,"YUnion":2,"YCoin":2,"YReagent":2,"BLaurel":2,"BAmaranth":2,"GSaltStat":1,"GChalk":1,"YCake":1,"BBat":0, "BBulb":0, "YLaurel":1, "YAmaranth":1, "YBlossom":1, "BBlossom":2, "BWilliam":2, "BTorn":2, "BVigo":2, "BAnno":2, "BBHooks":2, "BChalk":2, "YWilliam":1, "YPouch":1, "YChalk":1, "YEnvelope":1, "GRealtyKey":1, "GGlasses":1, "GRPD":1, "GMLetter":1, "GBone":1, "BLens":0, "GADress":0, "GBat":0, "GBulb":0, "GDress":0, "GSuture":0, "PAgent":0, "PiBulb":0, "PiSy":0, "PLens":0, "YBat":0, "YFila":0, "YGrip":0, "YGrip":0, "YLens":0, "YOptic":0, "YRoll":0, "YSponge":0, "YScissor":1, "YThread":1, "YWrap":1, "BBand":1, "BTape":1, "BGlove":1, "PiCog":1, "GWrench":1, "GHack":1, "YCutWire":1, "YClamp":1, "YPGlove":1, "YSocket":1, "YSpool":1, "BRag":1, "BInstruct":1, "BScrap":1, "YSpool":1, "BRag":1, "BScrap":1, "BInstruct":1, "PWRing":1, "PRing":1, "PAmber":2, "PGlass":2, "GToken":2, "YEToken":2, "YPearl":2, "YBeads":2, "BRope":2, "PBead":2, "GCord":2, "GStamp":2, "YJelly":2, "YBead":2, "YMWire":2,"YStamp":2,"YTwine":2,"BAddend":2, "PWWard":0, "GPartyStream":0, "GEnvel":0, "GWilliam":0, "GLaurel":0, "GAmaranth":0, "PBinding":0, "GBlossom":0, "GWeddingPhoto":0, "GAKey":0, "GCrowE":0, "PLips":0, "GDamagePhoto":0, "GLocket":0, "GCookbook":0, "PCoin":0, "PReagent":0, "GNoose":0, "POak":0, "GJigsaw":1}
     for key, value in %Page% {
         Button := key . "B"
         Image := key . "I"
         if (Pages[key] = PNum) {
             GuiControl, Show, %Button%
-            Sleep, 1
+            ;Sleep, 1
             GuiControl, Show, %Image%
         }
         else {
             GuiControl, Hide, %Button%
-            Sleep, 1
+            ;Sleep, 1
             GuiControl, Hide, %Image%
         }
     }
@@ -368,6 +436,7 @@ Ini_Write(Category) { ; pass in the name of the dictionary
 guiclose:
     Ini_Write("Items")
     Ini_Write("Addons")
+    Ini_Write("Offerings")
     ExitApp
 Return
 
