@@ -8,6 +8,7 @@
 
 Global Items := Initialize("Items")
 Global Addons := Initialize("Addons")
+Global Offerings := Initialize("Offerings")
 Global AddonsPage := 0
 Global OfferingsPage := 0
 Gui, Add, Button, x311 y420 Default gStart, Start
@@ -192,7 +193,69 @@ Gui, Add, Pic, w48 h48 vYTwineI hidden, %A_ScriptDir%\src\Addon\Map\YTwine.png
 Gui, Add, Pic, w48 h48 vBAddendI hidden, %A_ScriptDir%\src\Addon\Map\BAddend.png
 Update_Buttons(Addons)
 ;### ADDONS END
-Gui,Show,, AutoBloodweb
+Gui,Tab,Offerings
+;###OFFERINGS START
+Gui, Add, Button, w48 h48 x22 y36 gonClick vPBindingB
+Gui, Add, Button, w48 h48 gonClick vPCoinB
+Gui, Add, Button, w48 h48 gonClick vPLipsB
+Gui, Add, Button, w48 h48 gonClick vPOakB
+Gui, Add, Button, w48 h48 gonClick vPReagentB
+Gui, Add, Button, w48 h48 gonClick vPWWardB
+Gui, Add, Button, w48 h48 gonPage vOfferingsB, 🢀
+;###COLUMN 2 IMAGES
+Gui, Add, Pic, w48 h48 x75 y38 vPBindingI, %A_ScriptDir%\src\Offering\PBinding.png
+Gui, Add, Pic, w48 h48 x75 y92 vPCoinI, %A_ScriptDir%\src\Offering\PCoin.png
+Gui, Add, Pic, w48 h48 x75 y145 vPLipsI, %A_ScriptDir%\src\Offering\PLips.png
+Gui, Add, Pic, w48 h48 x75 y200 vPOakI, %A_ScriptDir%\src\Offering\POak.png
+Gui, Add, Pic, w48 h48 vPReagentI, %A_ScriptDir%\src\Offering\PReagent.png
+Gui, Add, Pic, w48 h48 vPWWardI, %A_ScriptDir%\src\Offering\PWWard.png
+;###COLUMN 3 BUTTONS
+Gui, Add, Button, x130 y38 w48 h48 gonClick vGPartyStreamB
+Gui, Add, Button, w48 h48 gonClick vGEnvelB
+Gui, Add, Button, w48 h48 gonClick vGLaurelB
+Gui, Add, Button, w48 h48 gonClick vGAmaranthB
+Gui, Add, Button, w48 h48 gonClick vGBlossomB
+Gui, Add, Button, w48 h48 gonClick vGWilliamB
+Gui, Add, Button, w48 h48 gonClick vGAKeyB ;extra button
+;###COLUMN 4 IMAGES
+Gui, Add, Pic, w48 h48 x183 y38 vGPartyStreamI, %A_ScriptDir%\src\Offering\GPartyStream.png
+Gui, Add, Pic, w48 h48 vGEnvelI, %A_ScriptDir%\src\Offering\GEnvel.png
+Gui, Add, Pic, w48 h48 vGLaurelI, %A_ScriptDir%\src\Offering\GLaurel.png
+Gui, Add, Pic, w48 h48 vGAmaranthI, %A_ScriptDir%\src\Offering\GAmaranth.png
+Gui, Add, Pic, w48 h48 vGBlossomI, %A_ScriptDir%\src\Offering\GBlossom.png
+Gui, Add, Pic, w48 h48 vGWilliamI, %A_ScriptDir%\src\Offering\GWilliam.png
+Gui, Add, Pic, w48 h48 vGAKeyI, %A_ScriptDir%\src\Offering\GAKey.png
+;###COLUMN 5 BUTTONS
+Gui, Add, Button, x237 y38 w48 h48 gonClick vGWeddingPhotoB
+Gui, Add, Button, w48 h48 gonClick vGCrowEB
+Gui, Add, Button, w48 h48 gonClick vGDamagePhotoB
+Gui, Add, Button, w48 h48 gonClick vGNooseB
+Gui, Add, Button, w48 h48 gonClick vGCookbookB
+Gui, Add, Button, w48 h48 gonClick vGLocketB
+Gui, Add, Button, x290 y361 w48 h48 gonPage vOfferingsB2, 🢂
+;###COLUMN 6 IMAGES
+Gui, Add, Pic, w48 h48 x290 y38 vGWeddingPhotoI, %A_ScriptDir%\src\Offering\GWeddingPhoto.png
+Gui, Add, Pic, w48 h48 vGCrowEI, %A_ScriptDir%\src\Offering\GCrowE.png
+Gui, Add, Pic, w48 h48 vGDamagePhotoI, %A_ScriptDir%\src\Offering\GDamagePhoto.png
+Gui, Add, Pic, w48 h48 vGNooseI, %A_ScriptDir%\src\Offering\GNoose.png
+Gui, Add, Pic, w48 h48 vGCookbookI, %A_ScriptDir%\src\Offering\GCookbook.png
+Gui, Add, Pic, w48 h48 vGLocketI, %A_ScriptDir%\src\Offering\GLocket.png
+;### ADDONS START --- PAGE 2
+Gui, Add, Button, w48 h48 x22 y36 gonClick hidden vGJigsawB
+Gui, Add, Button, w48 h48 gonClick hidden vGBoneB
+Gui, Add, Button, w48 h48 gonClick hidden vGMLetterB
+Gui, Add, Button, w48 h48 gonClick hidden vGRPDB
+Gui, Add, Button, w48 h48 gonClick hidden vGGlassesB
+Gui, Add, Button, w48 h48 gonClick hidden vGRealtyKeyB
+;###COLUMN 2 IMAGES --- PAGE 2
+Gui, Add, Pic, w48 h48 x75 y38 vGJigsawI hidden, %A_ScriptDir%\src\Offering\GJigsaw.png
+Gui, Add, Pic, w48 h48 x75 y92 vGBoneI hidden, %A_ScriptDir%\src\Offering\GBone.png
+Gui, Add, Pic, w48 h48 x75 y145 vGMLetterI hidden, %A_ScriptDir%\src\Offering\GMLetter.png
+Gui, Add, Pic, w48 h48 x75 y200 vGRPDI hidden, %A_ScriptDir%\src\Offering\GRPD.png
+Gui, Add, Pic, w48 h48 vGGlassesI hidden, %A_ScriptDir%\src\Offering\GGlasses.png
+Gui, Add, Pic, w48 h48 vGRealtyKeyI hidden, %A_ScriptDir%\src\Offering\GRealtyKey.png
+Gui,Show,, Auto Bloodweb
+Update_Buttons(Offerings)
 Return
 Start:
 Return
@@ -239,7 +302,7 @@ Update_Buttons(Buttons) {
 }
 
 Update_Page(Page, PNum) { ; add all buttons that will be on pages
-    Pages := {"BBat":0, "BBulb":0, "BLens":0, "GADress":0, "GBat":0, "GBulb":0, "GDress":0, "GSuture":0, "PAgent":0, "PiBulb":0, "PiSy":0, "PLens":0, "YBat":0, "YFila":0, "YGrip":0, "YGrip":0, "YLens":0, "YOptic":0, "YRoll":0, "YSponge":0, "YScissor":1, "YThread":1, "YWrap":1, "BBand":1, "BTape":1, "BGlove":1, "PiCog":1, "GWrench":1, "GHack":1, "YCutWire":1, "YClamp":1, "YPGlove":1, "YSocket":1, "YSpool":1, "BRag":1, "BInstruct":1, "BScrap":1, "YSpool":1, "BRag":1, "BScrap":1, "BInstruct":1, "PWRing":1, "PRing":1, "PAmber":2, "PGlass":2, "GToken":2, "YEToken":2, "YPearl":2, "YBeads":2, "BRope":2, "PBead":2, "GCord":2, "GStamp":2, "YJelly":2, "YBead":2, "YMWire":2,"YStamp":2,"YTwine":2,"BAddend":2}
+    Pages := {"BBat":0, "BBulb":0, "BLens":0, "GADress":0, "GBat":0, "GBulb":0, "GDress":0, "GSuture":0, "PAgent":0, "PiBulb":0, "PiSy":0, "PLens":0, "YBat":0, "YFila":0, "YGrip":0, "YGrip":0, "YLens":0, "YOptic":0, "YRoll":0, "YSponge":0, "YScissor":1, "YThread":1, "YWrap":1, "BBand":1, "BTape":1, "BGlove":1, "PiCog":1, "GWrench":1, "GHack":1, "YCutWire":1, "YClamp":1, "YPGlove":1, "YSocket":1, "YSpool":1, "BRag":1, "BInstruct":1, "BScrap":1, "YSpool":1, "BRag":1, "BScrap":1, "BInstruct":1, "PWRing":1, "PRing":1, "PAmber":2, "PGlass":2, "GToken":2, "YEToken":2, "YPearl":2, "YBeads":2, "BRope":2, "PBead":2, "GCord":2, "GStamp":2, "YJelly":2, "YBead":2, "YMWire":2,"YStamp":2,"YTwine":2,"BAddend":2, "PWWard":0, "GPartyStream":0, "GEnvel":0, "GWilliam":0, "GLaurel":0, "GAmaranth":0, "PBinding":0, "GBlossom":0, "GWeddingPhoto":0, "GAKey":0, "GCrowE":0, "PLips":0, "GDamagePhoto":0, "GLocket":0, "GCookbook":0, "PCoin":0, "PReagent":0, "GNoose":0, "POak":0, "GJigsaw":1}
     for key, value in %Page% {
         Button := key . "B"
         Image := key . "I"
