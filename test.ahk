@@ -8,7 +8,7 @@ CoordMode, Mouse, Screen
 width := 200
 Sleep, 1000
 While (FoundX < 0) {
-ImageSearch, FoundX, FoundY, 520, 450, 680, 700, *TransWhite *50 *w%width% *h-1 test.png
+ImageSearch, FoundX, FoundY, 0, 0, 700, 1080, *TransWhite *200 *w%width% *h-1 test.png ; 533, 480, 614, 561
 width -= 1
 ToolTip, %width%
 }

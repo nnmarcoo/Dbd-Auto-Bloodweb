@@ -7,8 +7,9 @@
 #Include %A_ScriptDir%\src\lib\HandleIni.ahk
 #Include %A_ScriptDir%\src\lib\ValChar.ahk
 #Include %A_ScriptDir%\src\lib\Interact.ahk
-;FindClick("test.png", "a,,-400 Stay t20%")
-;Return
+#Include %A_ScriptDir%\src\lib\Gdip.ahk
+#Include %A_ScriptDir%\src\lib\find.ahk
+SetBatchLines, -1
 Global Items := Initialize("Items")
 Global Addons := Initialize("Addons")
 Global Offerings := Initialize("Offerings")
