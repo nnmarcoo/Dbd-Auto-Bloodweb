@@ -2,24 +2,33 @@
 ;finish search algo
 ;add perks? checkbox
 ;add event items checkbox
-#Include %A_ScriptDir%\src\lib\FindClick.ahk
 #Include %A_ScriptDir%\src\lib\Debug.ahk
 #Include %A_ScriptDir%\src\lib\HandleIni.ahk
 #Include %A_ScriptDir%\src\lib\ValChar.ahk
 #Include %A_ScriptDir%\src\lib\Interact.ahk
 #Include %A_ScriptDir%\src\lib\Gdip.ahk
 #Include %A_ScriptDir%\src\lib\find.ahk
+
+
+;### TEST
+;find("test.png")
+;px(0xabc)
+;### TEST
+
+
 SetBatchLines, -1
+pToken := Gdip_Startup()
+sBitmap := Gdip_BitmapFromScreen("0|0|1920|1080")
 Global Items := Initialize("Items")
 Global Addons := Initialize("Addons")
 Global Offerings := Initialize("Offerings")
 Global AddonsPage := 0
 Global OfferingsPage := 0
+
 Gui, Add, Button, x311 y420 Default gStart, Start
 Gui, Add,Tab3,x10 y10 w340 h405 vTabName gTabChange,Items|Addons|Offerings ;create a tab control Flashlight|Medkit|Toolbox|Key|Map
 Gui, Font, S15 cRed Bold, Verdana
 Gui, Color, c9c9c9
-
 ;### ITEMS START
 ;### COLUMN 1 BUTTONS
 Gui, Add, Button, w48 h48 gonClick vPFlashB
@@ -318,7 +327,6 @@ Gui, Add, Pic, w48 h48 vBVigoI hidden, %A_ScriptDir%\src\Offering\BVigo.png
 Gui, Add, Pic, w48 h48 vBAnnoI hidden, %A_ScriptDir%\src\Offering\BAnno.png
 Gui, Add, Pic, w48 h48 vBBHooksI hidden, %A_ScriptDir%\src\Offering\BBHooks.png
 Gui, Add, Pic, w48 h48 vBChalkI hidden, %A_ScriptDir%\src\Offering\BChalk.png
-Gui,Show,, Auto Bloodweb
 ;###COLUMN 5 BUTTONS --- PAGE 3
 Gui, Add, Button, x237 y38 w48 h48 gonClick hidden vBClearReagentB
 Gui, Add, Button, w48 h48 gonClick hidden vBFaintReagentB
@@ -327,9 +335,12 @@ Gui, Add, Pic, w48 h48 x290 y38 vBClearReagentI hidden, %A_ScriptDir%\src\Offeri
 Gui, Add, Pic, w48 h48 vBFaintReagentI hidden, %A_ScriptDir%\src\Offering\BFaintReagent.png
 ;###OFFERINGS END
 Update_Buttons(Offerings)
+Gui,Show,, Auto Bloodweb
 Return
 Start:
 Return
+
+
 
 Click() {
     Click Down
@@ -348,3 +359,6 @@ TabChange:
     Gui, submit, nohide
     Global TabName
 Return
+
+esc::
+ExitApp

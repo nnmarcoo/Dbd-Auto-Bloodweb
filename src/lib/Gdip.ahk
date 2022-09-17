@@ -1,3 +1,31 @@
+Gdip_ResizeBitmap(pBitmap, PercentOrWH, Dispose=1) { ; returns resized bitmap. By Learning one.
+	Gdip_GetImageDimensions(pBitmap, origW, origH)
+	if PercentOrWH contains w,h
+	{
+	RegExMatch(PercentOrWH, "i)w(\d*)", w), RegExMatch(PercentOrWH, "i)h(\d*)", h)
+	NewWidth := w1, NewHeight := h1
+	NewWidth := (NewWidth = "") ? origW/(origH/NewHeight) : NewWidth
+	NewHeight := (NewHeight = "") ? origH/(origW/NewWidth) : NewHeight
+	}
+	else
+	NewWidth := origW*PercentOrWH/100, NewHeight := origH*PercentOrWH/100
+	pBitmap2 := Gdip_CreateBitmap(NewWidth, NewHeight)
+	G2 := Gdip_GraphicsFromImage(pBitmap2), Gdip_SetSmoothingMode(G2, 4), Gdip_SetInterpolationMode(G2, 7)
+	Gdip_DrawImage(G2, pBitmap, 0, 0, NewWidth, NewHeight)
+	Gdip_DeleteGraphics(G2)
+	if Dispose
+	Gdip_DisposeImage(pBitmap)
+	return pBitmap2
+}
+/*
+;Examples:
+pResizedBitmap := Gdip_ResizeBitmap(pBitmap, 120) ; resizes to 120%. Disposes of pBitmap.
+pResizedBitmap := Gdip_ResizeBitmap(pBitmap, 50, 0) ; resizes to 50%. Does not dispose of pBitmap.
+pResizedBitmap := Gdip_ResizeBitmap(pBitmap, "w180 h80") ; resizes to width: 180 height: 80 (does not maintain aspect ratio). Disposes of pBitmap.
+pResizedBitmap := Gdip_ResizeBitmap(pBitmap, "w200") ; resizes to width: 200, automatically adjusts height (maintains aspect ratio). Disposes of pBitmap.
+pResizedBitmap := Gdip_ResizeBitmap(pBitmap, "h50") ; resizes to height: 50, automatically adjusts width (maintains aspect ratio). Disposes of pBitmap.
+*/
+
 ; Gdip standard library v1.45 by tic (Tariq Porter) 07/09/11
 ; Modifed by Rseding91 using fincs 64 bit compatible Gdip library 5/1/2013
 ; Supports: Basic, _L ANSi, _L Unicode x86 and _L Unicode x64
