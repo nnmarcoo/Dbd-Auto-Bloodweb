@@ -3,7 +3,7 @@
 pToken := Gdip_Startup() ; start Gdip
 clipboard := ""
 
-node_values := {} ; node data (values)
+nodevalues := {} ; node data (values)
 nodes := {} ; node tree (locations)
 
 search_locations_nodes := {1:"7,8,17,18"}
@@ -26,44 +26,15 @@ DllCall("SetCursorPos", "Uint", obj.x, "Uint", obj.y) ; debugging
     loop 35 { ; for x
         w := A_Index - 1 ; save x index
         loop 35 { ; for y
-            ;DllCall("SetCursorPos", "Uint", obj.x, "Uint", obj.y) ; debugging
             DllCall("gdiplus\GdipBitmapGetPixel", A_PtrSize ? "UPtr" : "UInt", pBitmap, "int", obj.x+w+5, "int", obj.y+A_Index+5, "uint*", ARGB) ; read pixel of x and y
             str .= col(ARGB) ; concatenate "1" if pixel RGB is over 100, otherwise 0
         }
     }
-    ;clipboard := str ; debugging
-    ;msgbox % clipboard ; debugging
-DllCall("QueryPerformanceFrequency", "Int64*", freq)
-DllCall("QueryPerformanceCounter", "Int64*", CounterBefore)
-adwwd := compare(str, "") ; PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,PABox,PMBox,PCBox,YBox,BBox,PEBox,PKey,GKey,PMap,GMap,PiKey,BBat,BBulb,BLens,GADress,GBat,GBulb,GDress,GSuture,PAgent,PiBulb,PiSy,PLens,YBat,YFila,YGrip,YLens,YOptic,YRoll,YSponge,YScissor,YThread,YWrap,BBand,BTape,BGlove,PiCog,GWrench,GHack,YCutWire,YClamp,YPGlove,YSocket,YSpool,BRag,BScrap,BInstruct,PWRing,PRing,PAmber,PGlass,GToken,YEToken,YBeads,YPearl,BRope,PBead,GCord,GStamp,YJelly,YBead,YMWire,YStamp,YTwine,BAddend,BAmaranth,BBlossom,BCattleTag,BCertifi,BChalk,BClearReagent,BCordage,BFaintReagent,BLaurel,BLeaflet,BPage,BPlate,BRiverRock,BTicket,BWilliam,GAKey,GAmaranth,GBlossom,GBone,GChalk,GCookbook,GCrest,GDamagePhoto,GEnvel,GGlasses,GJigsaw,GLaurel,GLocket,GMask,GNoose,GPartyStream,GPiper,GRealtyKey,GSaltStat,GWeddingPhoto,GWilliam,PBinding,PCoin,PLips,POak,PReagent,PWWard,YAmaranth,YBlossom,YCake,YCattleTag,YChalk,YChildBook,YClapboard,YCoin,YEnvelope,YLaurel,YPage,YPlate,YPouch,YReagent,YReport,YSeparation,YShroud,YSign,YTicket,YUnion,YWilliam,GCrowE,MLetter,GRPD,GMLetter,BBHooks,BAnno,BVigo,BTorn,BGrip,GWard
-DllCall("QueryPerformanceCounter", "Int64*", CounterAfter)
-MsgBox % "Elapsed QPC time is " . (CounterAfter - CounterBefore) / freq * 1000 " ms " adwwd 
+if ((val := compare(str, "PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,PABox,PMBox,PCBox,YBox,BBox,PEBox,PKey,GKey,PMap,GMap,PiKey,BBat,BBulb,BLens,GADress,GBat,GBulb,GDress,GSuture,PAgent,PiBulb,PiSy,PLens,YBat,YFila,YGrip,YLens,YOptic,YRoll,YSponge,YScissor,YThread,YWrap,BBand,BTape,BGlove,PiCog,GWrench,GHack,YCutWire,YClamp,YPGlove,YSocket,YSpool,BRag,BScrap,BInstruct,PWRing,PRing,PAmber,PGlass,GToken,YEToken,YBeads,YPearl,BRope,PBead,GCord,GStamp,YJelly,YBead,YMWire,YStamp,YTwine,BAddend,BAmaranth,BBlossom,BCattleTag,BCertifi,BChalk,BClearReagent,BCordage,BFaintReagent,BLaurel,BLeaflet,BPage,BPlate,BRiverRock,BTicket,BWilliam,GAKey,GAmaranth,GBlossom,GBone,GChalk,GCookbook,GCrest,GDamagePhoto,GEnvel,GGlasses,GJigsaw,GLaurel,GLocket,GMask,GNoose,GPartyStream,GPiper,GRealtyKey,GSaltStat,GWeddingPhoto,GWilliam,PBinding,PCoin,PLips,POak,PReagent,PWWard,YAmaranth,YBlossom,YCake,YCattleTag,YChalk,YChildBook,YClapboard,YCoin,YEnvelope,YLaurel,YPage,YPlate,YPouch,YReagent,YReport,YSeparation,YShroud,YSign,YTicket,YUnion,YWilliam,GCrowE,MLetter,GRPD,GMLetter,BBHooks,BAnno,BVigo,BTorn,BGrip,GWard")))
+
+    nodevalues.Insert(A_Index,val)
 }
-
-compare(str,nodes) {
-    if (str = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
-        return ; if the node is empty, return
-    min := 90 ; min similarity
-    best := null ; best match
-    Loop, read, %A_ScriptDir%\src\lib\data.txt ; read the data set
-    {
-        data := StrSplit(A_LoopReadLine, ",") ; split into [nodename, data]
-
-        if !InStr(nodes, data[1]) ; if we don't need it, skip it
-            Continue
-
-            compare := Similarity(str, data[2]) ; if we need it, compare it
-
-            if (compare > min) { ; if it is the best match so far, set as best
-                min := compare
-                best := data[1]
-            }
-            if (min = 100) ; if we found a match already, return
-                return best
-    }
-    return best
-}
-
+msgbox % obj2str(nodevalues)
 
 Gdip_DisposeImage(pBitmap) ;Make sure to free the bitmap when you finish with it
 Gdip_Shutdown(pToken)
@@ -74,11 +45,6 @@ col(ARGB) {
     B := ARGB & 255 ; 0-255 convert ARGB to RGB
     G := (ARGB >> 8) & 255 ; 0-255 convert ARGB to RGB
     R := (ARGB >> 16) & 255 ; 0-255 convert ARGB to RGB
-    ;grayscale := 0.299*R + 0.587*G + 0.114*B ; 0-255 convert RGB to grayscale
-    ;if grayscale > 176
-        ;return "1"
-    ;if grayscale > 100
-        ;return "1"
     if R > 100
         if G > 100
             if B > 100
@@ -95,7 +61,36 @@ Similarity(a,b){
 		if (a%A_Index% = b%A_index%)
 			matches++
 	}
-	return (matches = "") ? 0 : Round(matches/LoopCount*100)
+	return (!matches) ? 0 : Round(matches/LoopCount*100)
+}
+
+compare(str,nodes) {
+    if (str = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
+        return ; if the node is empty, return
+    min := 90 ; min similarity
+    best := null ; best match
+    Loop, read, %A_ScriptDir%\src\lib\data.txt ; read the data set
+    {
+        data := StrSplit(A_LoopReadLine, ",") ; split into [nodename, data]
+
+        if !InStr(nodes, data[1]) ; if we don't need it, skip it
+            Continue
+        if (min = 100) ; if we found a match already, return
+            return best
+
+        if ((compare := Similarity(str, data[2])) > min) { ; if it is the best match so far, set as best
+            min := compare
+            best := data[1]
+        }
+    }
+    return best
+}
+
+Obj2Str(obj) 
+{
+	For k,v in obj
+		Str .= k " = " v "`n"
+	return RTrim(Str, "`n")
 }
 
 esc::
