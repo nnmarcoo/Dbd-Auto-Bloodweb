@@ -23,11 +23,16 @@ find(allow) {
     while (A_TimeIdleKeyboard > 1) {
         nodevalues := {} ; node data (values)
         nodes := {} ; node tree (path)
+        skip := ""
         pBitmap := Gdip_BitmapFromScreen()
         if A_ScreenHeight != 1080
             pBitmap := Gdip_ResizeBitmap(pBitmap, "w1920 h1080")
 
+        ; for all the path coordinates, check and build the path
+
         for _, obj in nsearch { ; for all of the search areas
+            if InStr(A_Index, skip)
+                Continue
             DllCall("SetCursorPos", "Uint", obj.x, "Uint", obj.y) ; debugging
                 str := "" ; temp string
                 loop 35 { ; for x
@@ -39,6 +44,7 @@ find(allow) {
                 }
             if ((val := compare(str, allow))) ; "PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,PABox,PMBox,PCBox,YBox,BBox,PEBox,PKey,GKey,PMap,GMap,PiKey,BBat,BBulb,BLens,GADress,GBat,GBulb,GDress,GSuture,PAgent,PiBulb,PiSy,PLens,YBat,YFila,YGrip,YLens,YOptic,YRoll,YSponge,YScissor,YThread,YWrap,BBand,BTape,BGlove,PiCog,GWrench,GHack,YCutWire,YClamp,YPGlove,YSocket,YSpool,BRag,BScrap,BInstruct,PWRing,PRing,PAmber,PGlass,GToken,YEToken,YBeads,YPearl,BRope,PBead,GCord,GStamp,YJelly,YBead,YMWire,YStamp,YTwine,BAddend,BAmaranth,BBlossom,BCattleTag,BCertifi,BChalk,BClearReagent,BCordage,BFaintReagent,BLaurel,BLeaflet,BPage,BPlate,BRiverRock,BTicket,BWilliam,GAKey,GAmaranth,GBlossom,GBone,GChalk,GCookbook,GCrest,GDamagePhoto,GEnvel,GGlasses,GJigsaw,GLaurel,GLocket,GMask,GNoose,GPartyStream,GPiper,GRealtyKey,GSaltStat,GWeddingPhoto,GWilliam,PBinding,PCoin,PLips,POak,PReagent,PWWard,YAmaranth,YBlossom,YCake,YCattleTag,YChalk,YChildBook,YClapboard,YCoin,YEnvelope,YLaurel,YPage,YPlate,YPouch,YReagent,YReport,YSeparation,YShroud,YSign,YTicket,YUnion,YWilliam,GCrowE,MLetter,GRPD,GMLetter,BBHooks,BAnno,BVigo,BTorn,BGrip,GWard"
                 nodevalues.Insert(A_Index,val)
+                ; ^^^ replace with, navigate to, instead of adding it to a dic
 
             ;clipboard := str
             ;msgbox % clipboard
