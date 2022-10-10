@@ -8,17 +8,11 @@
 #Include %A_ScriptDir%\src\lib\Interact.ahk
 #Include %A_ScriptDir%\src\lib\Gdip.ahk
 #Include %A_ScriptDir%\src\lib\find.ahk
-
-
-;### TEST
-;find("test.png")
-;px(0xabc)
-;### TEST
+#InstallKeybdHook
 
 
 SetBatchLines, -1
 pToken := Gdip_Startup()
-sBitmap := Gdip_BitmapFromScreen("0|0|1920|1080")
 Global Items := Initialize("Items")
 Global Addons := Initialize("Addons")
 Global Offerings := Initialize("Offerings")
@@ -352,6 +346,7 @@ guiclose:
     Ini_Write("Items")
     Ini_Write("Addons")
     Ini_Write("Offerings")
+    Gdip_Shutdown(pToken)
     ExitApp
 Return
 
@@ -361,4 +356,5 @@ TabChange:
 Return
 
 esc::
+Gdip_Shutdown(pToken)
 ExitApp
