@@ -3,28 +3,35 @@
 #MaxMem 9000
 pToken := Gdip_Startup() ; start Gdip
 
-search_locations := {1:"630,448,640,391,700,420,722,447"}
-
-find("PFlash")
+DllCall("QueryPerformanceFrequency", "Int64*", freq)
+DllCall("QueryPerformanceCounter", "Int64*", CounterBefore)
+find("PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,PABox,PMBox,PCBox,YBox,BBox,PEBox,PKey,GKey,PMap,GMap,PiKey,BBat,BBulb,BLens,GADress,GBat,GBulb,GDress,GSuture,PAgent,PiBulb,PiSy,PLens,YBat,YFila,YGrip,YLens,YOptic,YRoll,YSponge,YScissor,YThread,YWrap,BBand,BTape,BGlove,PiCog,GWrench,GHack,YCutWire,YClamp,YPGlove,YSocket,YSpool,BRag,BScrap,BInstruct,PWRing,PRing,PAmber,PGlass,GToken,YEToken,YBeads,YPearl,BRope,PBead,GCord,GStamp,YJelly,YBead,YMWire,YStamp,YTwine,BAddend,BAmaranth,BBlossom,BCattleTag,BCertifi,BChalk,BClearReagent,BCordage,BFaintReagent,BLaurel,BLeaflet,BPage,BPlate,BRiverRock,BTicket,BWilliam,GAKey,GAmaranth,GBlossom,GBone,GChalk,GCookbook,GCrest,GDamagePhoto,GEnvel,GGlasses,GJigsaw,GLaurel,GLocket,GMask,GNoose,GPartyStream,GPiper,GRealtyKey,GSaltStat,GWeddingPhoto,GWilliam,PBinding,PCoin,PLips,POak,PReagent,PWWard,YAmaranth,YBlossom,YCake,YCattleTag,YChalk,YChildBook,YClapboard,YCoin,YEnvelope,YLaurel,YPage,YPlate,YPouch,YReagent,YReport,YSeparation,YShroud,YSign,YTicket,YUnion,YWilliam,GCrowE,MLetter,GRPD,GMLetter,BBHooks,BAnno,BVigo,BTorn,BGrip,GWard")
+DllCall("QueryPerformanceCounter", "Int64*", CounterAfter)
+MsgBox % "Elapsed QPC time is " . (CounterAfter - CounterBefore) / freq * 1000 " ms"
 
 Gdip_DisposeImage(pBitmap) ;Make sure to free the bitmap when you finish with it
 Gdip_Shutdown(pToken)
 ExitApp
 
-find(allow) {
-    nsearch := [{x:657,y:440},{x:763,y:500},{x:763,y:624},{x:658,y:685},{x:553,y:624},{x:553,y:500},{x:720,y:328},{x:836,y:390},{x:899,y:501},{x:899,y:623},{x:836,y:734},{x:720,y:796},{x:596,y:796},{x:480,y:734},{x:417,y:623},{x:417,y:501},{x:480,y:390},{x:596,y:328},{x:658,y:209},{x:838,y:257},{x:969,y:388},{x:1018,y:562},{x:969,y:736},{x:838,y:868},{x:658,y:915},{x:477,y:868},{x:347,y:736},{x:298,y:562},{x:347,y:388},{x:478,y:257}]
-    ncords := [{1:[{x:632,y:449},{x:640,y:391},{x:699,y:420},{x:723,y:447}]}] ; 11
-    nkey := [[17,18,7,8],[7,8,9,10],[9,10,11,12],[11,12,13,14],[13,14,15,16],[15,16,17,18],[19,20],[20,21],[21,22],[22,23],[23,24],[24,25],[25,26],[26,27],[27,28],[28,29],[29,30],[30,19]] 
+;todo
+;change ncords to an array of array of objects instead of array of dictionarys of arrays of objects
+;fix lum by having another array to check brown pixels
 
-    while (A_TimeIdleKeyboard > 1) {
+find(allow) {
+    nsearch := [{x:657,y:440},{x:763,y:500},{x:763,y:624},{x:658,y:685},{x:553,y:624},{x:553,y:500},{x:720,y:328},{x:836,y:390},{x:899,y:501},{x:899,y:623},{x:836,y:734},{x:720,y:796},{x:596,y:796},{x:480,y:734},{x:417,y:623},{x:417,y:501},{x:480,y:390},{x:596,y:328},{x:658,y:209},{x:838,y:257},{x:969,y:388},{x:1018,y:562},{x:969,y:736},{x:838,y:868},{x:658,y:915},{x:477,y:868},{x:347,y:736},{x:298,y:562},{x:347,y:388},{x:478,y:257}] ; coordinates that will be searched for the icons
+    ncords := [{1:[{x:632,y:449},{x:640,y:391},{x:699,y:420},{x:723,y:447}]}] ; coordinates of the paths that each node leads to
+    nkey := [[17,18,7,8],[7,8,9,10],[9,10,11,12],[11,12,13,14],[13,14,15,16],[15,16,17,18],[19,20],[20,21],[21,22],[22,23],[23,24],[24,25],[25,26],[26,27],[27,28],[28,29],[29,30],[30,19]] ; a key representing which nodes are led to by a node (depending on the index)
+    ckey := ""
+
+    while (!A_TimeIdleKeyboard < 10) {
         ;unlocked nodes := ""
         ;locked nodes := ""
+        nqueue := []
         nodevalues := {} ; node data (values)
-        nodepaths := {1:"", 2:"", 3:"", 4:"", 5:"", 6:"", 7:"", 8:"", 9:"", 10:"", 11:"", 12:"", 13:"", 14:"", 15:"", 16:"", 17:"", 18:""} ; node tree (path)
+        nodepaths := ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""] ; node tree (path)
         pBitmap := Gdip_BitmapFromScreen()
         if A_ScreenHeight != 1080
             pBitmap := Gdip_ResizeBitmap(pBitmap, "w1920 h1080")
-
 
 
         ; for all the path coordinates, check and build the path
@@ -33,11 +40,13 @@ find(allow) {
             for _, cord in obj[A_Index] {
                 DllCall("SetCursorPos", "Uint", cord.x, "Uint", cord.y) ; debugging
                 DllCall("gdiplus\GdipBitmapGetPixel", A_PtrSize ? "UPtr" : "UInt", pBitmap, "int", cord.x, "int", cord.y, "uint*", npath) ; read pixel of x and y
-                msgbox % path(npath, 4281940025) " " path(npath, 4285687377) " " Format("{:X}", npath)
-                nodepaths[Incords] .= path(npath, 4281940025) < 10 || path(npath, 4285687377) < 10 ? nkey[Incords][A_Index] "," : "" ; some key 1:7,8,17,18
+                ;msgbox % Format("{:X}", npath)
+                ;msgbox % lum(npath)
+                ;NOT WORKING-----------
+                nodepaths[Incords] .= p := lum(npath) = "g" || lum(npath) = "t" ? nkey[Incords][A_Index] "," : "" ; some key 1:7,8,17,18
             }
         }
-        msgbox % obj2str(nodepaths)
+        msgbox % arr2str(nodepaths)
 
         for _, obj in nsearch { ; for all of the search areas
             DllCall("SetCursorPos", "Uint", obj.x, "Uint", obj.y) ; debugging
@@ -49,12 +58,19 @@ find(allow) {
                         str .= col(ARGB) ; concatenate "1" if pixel RGB is over 100, otherwise 0
                     }
                 }
-            if ((val := compare(str, allow))) ; "PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,PABox,PMBox,PCBox,YBox,BBox,PEBox,PKey,GKey,PMap,GMap,PiKey,BBat,BBulb,BLens,GADress,GBat,GBulb,GDress,GSuture,PAgent,PiBulb,PiSy,PLens,YBat,YFila,YGrip,YLens,YOptic,YRoll,YSponge,YScissor,YThread,YWrap,BBand,BTape,BGlove,PiCog,GWrench,GHack,YCutWire,YClamp,YPGlove,YSocket,YSpool,BRag,BScrap,BInstruct,PWRing,PRing,PAmber,PGlass,GToken,YEToken,YBeads,YPearl,BRope,PBead,GCord,GStamp,YJelly,YBead,YMWire,YStamp,YTwine,BAddend,BAmaranth,BBlossom,BCattleTag,BCertifi,BChalk,BClearReagent,BCordage,BFaintReagent,BLaurel,BLeaflet,BPage,BPlate,BRiverRock,BTicket,BWilliam,GAKey,GAmaranth,GBlossom,GBone,GChalk,GCookbook,GCrest,GDamagePhoto,GEnvel,GGlasses,GJigsaw,GLaurel,GLocket,GMask,GNoose,GPartyStream,GPiper,GRealtyKey,GSaltStat,GWeddingPhoto,GWilliam,PBinding,PCoin,PLips,POak,PReagent,PWWard,YAmaranth,YBlossom,YCake,YCattleTag,YChalk,YChildBook,YClapboard,YCoin,YEnvelope,YLaurel,YPage,YPlate,YPouch,YReagent,YReport,YSeparation,YShroud,YSign,YTicket,YUnion,YWilliam,GCrowE,MLetter,GRPD,GMLetter,BBHooks,BAnno,BVigo,BTorn,BGrip,GWard"
-                nodevalues.Insert(A_Index,val)
-                ; ^^^ replace with, navigate to, instead of adding it to a dic
-
-            ;clipboard := str
-            ;msgbox % clipboard
+            if compare(str, allow) { ; "PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,PABox,PMBox,PCBox,YBox,BBox,PEBox,PKey,GKey,PMap,GMap,PiKey,BBat,BBulb,BLens,GADress,GBat,GBulb,GDress,GSuture,PAgent,PiBulb,PiSy,PLens,YBat,YFila,YGrip,YLens,YOptic,YRoll,YSponge,YScissor,YThread,YWrap,BBand,BTape,BGlove,PiCog,GWrench,GHack,YCutWire,YClamp,YPGlove,YSocket,YSpool,BRag,BScrap,BInstruct,PWRing,PRing,PAmber,PGlass,GToken,YEToken,YBeads,YPearl,BRope,PBead,GCord,GStamp,YJelly,YBead,YMWire,YStamp,YTwine,BAddend,BAmaranth,BBlossom,BCattleTag,BCertifi,BChalk,BClearReagent,BCordage,BFaintReagent,BLaurel,BLeaflet,BPage,BPlate,BRiverRock,BTicket,BWilliam,GAKey,GAmaranth,GBlossom,GBone,GChalk,GCookbook,GCrest,GDamagePhoto,GEnvel,GGlasses,GJigsaw,GLaurel,GLocket,GMask,GNoose,GPartyStream,GPiper,GRealtyKey,GSaltStat,GWeddingPhoto,GWilliam,PBinding,PCoin,PLips,POak,PReagent,PWWard,YAmaranth,YBlossom,YCake,YCattleTag,YChalk,YChildBook,YClapboard,YCoin,YEnvelope,YLaurel,YPage,YPlate,YPouch,YReagent,YReport,YSeparation,YShroud,YSign,YTicket,YUnion,YWilliam,GCrowE,MLetter,GRPD,GMLetter,BBHooks,BAnno,BVigo,BTorn,BGrip,GWard"
+                
+                node := A_Index
+                nqueue.Push(node)
+                ;build node queue vvv
+                for i, v in nodepaths
+                    if InStr(v, node) {
+                        node := A_Index
+                        nqueue.Push(i)
+                    }
+                        
+            }
+            msgbox % Arr2Str(nqueue)
         }
     }
     Gdip_DisposeImage(pBitmap)
@@ -70,6 +86,25 @@ col(ARGB) { ; -- if all RGB values are above 100, return 1, otherwise return 0
     return "0"
     */
     return ARGB & 255 > 100 && (ARGB >> 8) & 255 > 100 && (ARGB >> 16) & 255 > 100 ? "1" : "0"
+}
+
+lum(ARGB) {
+    ;black = 0,0,0
+    ;gray = 56,58,61
+    ;tan = 132,117,90
+    ;red =214,0,0
+    B := ARGB & 255
+    G := (ARGB >> 8) & 255
+    R :=  (ARGB >> 16) & 255
+    msgbox % R " " G " " B
+    if (R=0)
+        return "b"
+    if (R+G+B>300)
+        return "t"
+    if (R>100 && G < 50)
+        return "r"
+    if (R > 55 && G > 50 && B > 50 && R+G+B > 150)
+        return "g"
 }
 
 similarity(a,b){ ; -- compare two strings
@@ -106,20 +141,66 @@ compare(str,nodes) { ; -- compare input icon with data set and return matching p
     return best
 }
 
-path(c1,c2) {
-    b1 := c1 & 255
-    g1 := (c1 >> 8) & 255
-    r1 := (c1 >> 16) & 255
-    b2 := c2 & 255
-    g2 := (c2 >> 8) & 255
-    r2 := (c2 >> 16) & 255
-    return sqrt((r1-r2)**2+(g1-g2)**2+(b1-b2)**2)
+px(color) {
+
+    static hdc, hbm, obm, pBits
+    if !hdc {
+        ; struct BITMAPINFOHEADER - https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapinfoheader
+        hdc := DllCall("CreateCompatibleDC", "ptr", 0, "ptr")
+        VarSetCapacity(bi, 40, 0)              ; sizeof(bi) = 40
+            NumPut(       40, bi,  0,   "uint") ; Size
+            NumPut(A_ScreenWidth, bi,  4,   "uint") ; Width
+            NumPut(-A_ScreenHeight, bi,  8,    "int") ; Height - Negative so (0, 0) is top-left.
+            NumPut(        1, bi, 12, "ushort") ; Planes
+            NumPut(       32, bi, 14, "ushort") ; BitCount / BitsPerPixel
+        hbm := DllCall("CreateDIBSection", "ptr", hdc, "ptr", &bi, "uint", 0, "ptr*", pBits:=0, "ptr", 0, "uint", 0, "ptr")
+        obm := DllCall("SelectObject", "ptr", hdc, "ptr", hbm, "ptr")
+    }
+
+        ; Retrieve the device context for the screen.
+        static sdc := DllCall("GetDC", "ptr", 0, "ptr")
+
+        ; Copies a portion of the screen to a new device context.
+        DllCall("gdi32\BitBlt"
+                , "ptr", hdc, "int", 0, "int", 0, "int", A_ScreenWidth, "int", A_ScreenHeight
+                , "ptr", sdc, "int", 0, "int", 0, "uint", 0x00CC0020 | 0x40000000) ; SRCCOPY | CAPTUREBLT
+
+            static bin := 0
+            if !bin {
+                ; C source code - https://godbolt.org/z/oYx39nr5s
+                code := (A_PtrSize == 4)
+                ? "VYnli1UIi0UMi00QjQSCOcJzDTkKdQSJ0OsFg8IE6+9dww=="
+                : "idJIjQSRSDnBcw9EOQF1BInI6wZIg8EE6+zD"
+                padding := (code ~= "==$") ? 2 : (code ~= "=$") ? 1 : 0
+                size := 3 * (StrLen(code) / 4) - padding
+                bin := DllCall("GlobalAlloc", "uint", 0, "uptr", size, "ptr")
+                DllCall("VirtualProtect", "ptr", bin, "ptr", size, "uint", 0x40, "uint*", old:=0)
+                DllCall("crypt32\CryptStringToBinary", "str", code, "uint", 0, "uint", 0x1, "ptr", bin, "uint*", size, "ptr", 0, "ptr", 0)
+            }
+
+            ; Pass the width * height, but the size is returned due to C interpreting Scan0 as a integer pointer.
+            ; So when doing pointer arithmetic, *Scan0 + 1 is actually adding 4 bytes.
+            byte := DllCall(bin, "ptr", pBits, "uint", A_ScreenWidth * A_ScreenHeight, "uint", color, "int")
+            ;if (byte == pBits + A_ScreenWidth * A_ScreenHeight * 4)
+                ;throw Exception("pixel not found")
+            x := mod((byte - pBits) / 4, A_ScreenWidth)
+            y := ((byte - pBits) / 4) // A_ScreenWidth
+
+            return {x:x, y:y}
+
 }
 
 Obj2Str(obj) {
 	For k,v in obj
 		Str .= k " = " v "`n"
 	return RTrim(Str, "`n")
+}
+
+Arr2Str(arr) {
+    out:=""
+    for k, v in arr
+        out .= v "|"
+    return out
 }
 
 esc::
