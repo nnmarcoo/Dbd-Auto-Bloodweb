@@ -1,4 +1,4 @@
-﻿#include C:\Users\marco\Documents\GitHub\Dbd-Auto-Perks\src\lib\Gdip.ahk
+#include C:\Users\marco\Documents\GitHub\Dbd-Auto-Perks\src\lib\Gdip.ahk
 #InstallKeybdHook
 #MaxMem 9000
 pToken := Gdip_Startup() ; start Gdip
