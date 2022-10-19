@@ -1,6 +1,6 @@
 #include C:\Users\marco\Documents\GitHub\Dbd-Auto-Perks\src\lib\Gdip.ahk
 #InstallKeybdHook
-#MaxMem 9000
+;#MaxMem 9000
 pToken := Gdip_Startup() ; start Gdip
 
 DllCall("QueryPerformanceFrequency", "Int64*", freq)
@@ -19,7 +19,8 @@ ExitApp
 
 find(allow) {
     nsearch := [{x:657,y:440},{x:763,y:500},{x:763,y:624},{x:658,y:685},{x:553,y:624},{x:553,y:500},{x:720,y:328},{x:836,y:390},{x:899,y:501},{x:899,y:623},{x:836,y:734},{x:720,y:796},{x:596,y:796},{x:480,y:734},{x:417,y:623},{x:417,y:501},{x:480,y:390},{x:596,y:328},{x:658,y:209},{x:838,y:257},{x:969,y:388},{x:1018,y:562},{x:969,y:736},{x:838,y:868},{x:658,y:915},{x:477,y:868},{x:347,y:736},{x:298,y:562},{x:347,y:388},{x:478,y:257}] ; coordinates that will be searched for the icons
-    ncords := [{1:[{x:632,y:449},{x:640,y:391},{x:699,y:420},{x:723,y:447}]}] ; coordinates of the paths that each node leads to
+    ncords := [[{x:632,y:449},{x:640,y:391},{x:699,y:420},{x:723,y:447}]] ; coordinates of the paths that each node leads to
+    nbcords := [[{x:615,y:439},{x:,y:},{x:708,y:415},{x:713,y:443}]] ; coordinates of path border to check for gray path
     nkey := [[17,18,7,8],[7,8,9,10],[9,10,11,12],[11,12,13,14],[13,14,15,16],[15,16,17,18],[19,20],[20,21],[21,22],[22,23],[23,24],[24,25],[25,26],[26,27],[27,28],[28,29],[29,30],[30,19]] ; a key representing which nodes are led to by a node(the index)
     npkey := [[],[],[],[],[],[],[1,2],[1,2],[2,3],[2,3],[3,4],[3,4],[4,5],[4,5],[5,6],[5,6],[1,6],[1,6],[7,18],[7,8],[8,9],[9,10],[10,11],[11,12],[12,13],[13,14],[14,15],[15,16],[16,17],[17,18]] ; a key representing which nodes lead to the node(the index)
     ckey := ""
@@ -37,7 +38,7 @@ find(allow) {
         ; for all the path coordinates, check and build the path
         for _, obj in ncords {
             Incords := A_Index
-            for _, cord in obj[A_Index] {
+            for _, cord in obj[Incords] {
                 DllCall("SetCursorPos", "Uint", cord.x, "Uint", cord.y) ; debugging
                 DllCall("gdiplus\GdipBitmapGetPixel", A_PtrSize ? "UPtr" : "UInt", pBitmap, "int", cord.x, "int", cord.y, "uint*", npath) ; read pixel of x and y
                 ;msgbox % Format("{:X}", npath)
@@ -69,7 +70,8 @@ find(allow) {
                             nqueue.Push(node)
                         }
                     }
-                }   
+                }
+                ;send nodes to async clicker
             }
             msgbox % Arr2Str(nqueue)
         }
