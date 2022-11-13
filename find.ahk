@@ -15,7 +15,7 @@ ExitApp
 
 ;todo
 ;change ncords to an array of array of objects instead of array of dictionarys of arrays of objects
-;fix lum by having another array to check brown pixels
+;fix lum by having it return reminder to check for gray path for icon checker
 
 find(allow) {
     nsearch := [{x:657,y:440},{x:763,y:500},{x:763,y:624},{x:658,y:685},{x:553,y:624},{x:553,y:500},{x:720,y:328},{x:836,y:390},{x:899,y:501},{x:899,y:623},{x:836,y:734},{x:720,y:796},{x:596,y:796},{x:480,y:734},{x:417,y:623},{x:417,y:501},{x:480,y:390},{x:596,y:328},{x:658,y:209},{x:838,y:257},{x:969,y:388},{x:1018,y:562},{x:969,y:736},{x:838,y:868},{x:658,y:915},{x:477,y:868},{x:347,y:736},{x:298,y:562},{x:347,y:388},{x:478,y:257}] ; coordinates that will be searched for the icons
@@ -47,7 +47,7 @@ find(allow) {
                 nodepaths[Incords] .= p := lum(npath) = "g" || lum(npath) = "t" ? nkey[Incords][A_Index] "," : "" ; some key 1:7,8,17,18
             }
         }
-        msgbox % arr2str(nodepaths)
+        ;msgbox % arr2str(nodepaths)
 
         for _, obj in nsearch { ; for all of the search areas
             DllCall("SetCursorPos", "Uint", obj.x, "Uint", obj.y) ; debugging
@@ -59,6 +59,7 @@ find(allow) {
                         str .= col(ARGB) ; concatenate "1" if pixel RGB is over 100, otherwise 0
                     }
                 }
+                msgbox % str
             if compare(str, allow) { ; "PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,PABox,PMBox,PCBox,YBox,BBox,PEBox,PKey,GKey,PMap,GMap,PiKey,BBat,BBulb,BLens,GADress,GBat,GBulb,GDress,GSuture,PAgent,PiBulb,PiSy,PLens,YBat,YFila,YGrip,YLens,YOptic,YRoll,YSponge,YScissor,YThread,YWrap,BBand,BTape,BGlove,PiCog,GWrench,GHack,YCutWire,YClamp,YPGlove,YSocket,YSpool,BRag,BScrap,BInstruct,PWRing,PRing,PAmber,PGlass,GToken,YEToken,YBeads,YPearl,BRope,PBead,GCord,GStamp,YJelly,YBead,YMWire,YStamp,YTwine,BAddend,BAmaranth,BBlossom,BCattleTag,BCertifi,BChalk,BClearReagent,BCordage,BFaintReagent,BLaurel,BLeaflet,BPage,BPlate,BRiverRock,BTicket,BWilliam,GAKey,GAmaranth,GBlossom,GBone,GChalk,GCookbook,GCrest,GDamagePhoto,GEnvel,GGlasses,GJigsaw,GLaurel,GLocket,GMask,GNoose,GPartyStream,GPiper,GRealtyKey,GSaltStat,GWeddingPhoto,GWilliam,PBinding,PCoin,PLips,POak,PReagent,PWWard,YAmaranth,YBlossom,YCake,YCattleTag,YChalk,YChildBook,YClapboard,YCoin,YEnvelope,YLaurel,YPage,YPlate,YPouch,YReagent,YReport,YSeparation,YShroud,YSign,YTicket,YUnion,YWilliam,GCrowE,MLetter,GRPD,GMLetter,BBHooks,BAnno,BVigo,BTorn,BGrip,GWard"
                 goal := A_Index
                 nqueue.Push(goal)
@@ -73,7 +74,7 @@ find(allow) {
                 }
                 ;send nodes to async clicker
             }
-            msgbox % Arr2Str(nqueue)
+            ;msgbox % Arr2Str(nqueue)
         }
     }
     Gdip_DisposeImage(pBitmap)
@@ -99,15 +100,13 @@ lum(ARGB) {
     B := ARGB & 255
     G := (ARGB >> 8) & 255
     R :=  (ARGB >> 16) & 255
-    msgbox % R " " G " " B
+    ;msgbox % R " " G " " B
     if (R=0)
         return "b"
     if (R+G+B>300)
         return "t"
     if (R>100 && G < 50)
         return "r"
-    if (R > 55 && G > 50 && B > 50 && R+G+B > 150)
-        return "g"
 }
 
 similarity(a,b){ ; -- compare two strings
