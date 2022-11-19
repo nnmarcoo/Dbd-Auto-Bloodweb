@@ -3,11 +3,8 @@
 ;#MaxMem 9000
 pToken := Gdip_Startup() ; start Gdip
 
-DllCall("QueryPerformanceFrequency", "Int64*", freq)
-DllCall("QueryPerformanceCounter", "Int64*", CounterBefore)
-find("PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,PABox,PMBox,PCBox,YBox,")
-DllCall("QueryPerformanceCounter", "Int64*", CounterAfter)
-MsgBox % "Elapsed QPC time is " . (CounterAfter - CounterBefore) / freq * 1000 " ms"
+find("PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,")
+
 
 Gdip_DisposeImage(pBitmap) ;Make sure to free the bitmap when you finish with it
 Gdip_Shutdown(pToken)
@@ -25,7 +22,7 @@ find(allow) {
     npkey := [[],[],[],[],[],[],[1,2],[1,2],[2,3],[2,3],[3,4],[3,4],[4,5],[4,5],[5,6],[5,6],[1,6],[1,6],[7,18],[7,8],[8,9],[9,10],[10,11],[11,12],[12,13],[13,14],[14,15],[15,16],[16,17],[17,18]] ; a key representing which nodes lead to the node(the index)
     ckey := ""
 
-    while (A_TimeIdle !< 250) { ; fix while loop
+    while (true) { ; fix while loop
         ;unlocked nodes := ""
         ;locked nodes := ""
         nqueue := [] ; queue of nodes to be clicked
@@ -77,12 +74,33 @@ find(allow) {
             }
         
         }
-        msgbox % Arr2Str2(nqueue)
+        for _, node in nqueue {
+            click(nsearch[node].x+20, nsearch[node].y+20)
+        }
+
+        loop {
+            try {
+                cords := px(0xFF9c9473)
+                click(cords.x+10,cords.y+20)
+            } catch e {
+                break
+            }
+        }
+        Sleep, 5000
+        ;msgbox % Arr2Str2(nqueue)
         ;break
     }
     Gdip_DisposeImage(pBitmap)
 }
 
+click(x, y) {
+    DllCall("SetCursorPos", "Uint", x, "Uint", y)
+    Sleep, 60
+    Click Down
+    Sleep, 600
+    Click up
+    DllCall("SetCursorPos", "Uint", 0, "Uint", 0)
+}
 
 col(ARGB) { ; -- if all RGB values are above 100, return 1, otherwise return 0
     /*
@@ -189,8 +207,8 @@ px(color) {
             ; Pass the width * height, but the size is returned due to C interpreting Scan0 as a integer pointer.
             ; So when doing pointer arithmetic, *Scan0 + 1 is actually adding 4 bytes.
             byte := DllCall(bin, "ptr", pBits, "uint", A_ScreenWidth * A_ScreenHeight, "uint", color, "int")
-            ;if (byte == pBits + A_ScreenWidth * A_ScreenHeight * 4)
-                ;throw Exception("pixel not found")
+            if (byte == pBits + A_ScreenWidth * A_ScreenHeight * 4)
+                throw Exception("pixel not found")
             x := mod((byte - pBits) / 4, A_ScreenWidth)
             y := ((byte - pBits) / 4) // A_ScreenWidth
 
