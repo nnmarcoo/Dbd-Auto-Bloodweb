@@ -5,7 +5,7 @@ pToken := Gdip_Startup() ; start Gdip
 
 DllCall("QueryPerformanceFrequency", "Int64*", freq)
 DllCall("QueryPerformanceCounter", "Int64*", CounterBefore)
-find("PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,PABox,PMBox,PCBox,YBox,BBox,PEBox,PKey,GKey,PMap,GMap,PiKey,BBat,BBulb,BLens,GADress,GBat,GBulb,GDress,GSuture,PAgent,PiBulb,PiSy,PLens,YBat,YFila,YGrip,YLens,YOptic,YRoll,YSponge,YScissor,YThread,YWrap,BBand,BTape,BGlove,PiCog,GWrench,GHack,YCutWire,YClamp,YPGlove,YSocket,YSpool,BRag,BScrap,BInstruct,PWRing,PRing,PAmber,PGlass,GToken,YEToken,YBeads,YPearl,BRope,PBead,GCord,GStamp,YJelly,YBead,YMWire,YStamp,YTwine,BAddend,BAmaranth,BBlossom,BCattleTag,BCertifi,BChalk,BClearReagent,BCordage,BFaintReagent,BLaurel,BLeaflet,BPage,BPlate,BRiverRock,BTicket,BWilliam,GAKey,GAmaranth,GBlossom,GBone,GChalk,GCookbook,GCrest,GDamagePhoto,GEnvel,GGlasses,GJigsaw,GLaurel,GLocket,GMask,GNoose,GPartyStream,GPiper,GRealtyKey,GSaltStat,GWeddingPhoto,GWilliam,PBinding,PCoin,PLips,POak,PReagent,PWWard,YAmaranth,YBlossom,YCake,YCattleTag,YChalk,YChildBook,YClapboard,YCoin,YEnvelope,YLaurel,YPage,YPlate,YPouch,YReagent,YReport,YSeparation,YShroud,YSign,YTicket,YUnion,YWilliam,GCrowE,MLetter,GRPD,GMLetter,BBHooks,BAnno,BVigo,BTorn,BGrip,GWard")
+find("PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,PABox,PMBox,PCBox,YBox,")
 DllCall("QueryPerformanceCounter", "Int64*", CounterAfter)
 MsgBox % "Elapsed QPC time is " . (CounterAfter - CounterBefore) / freq * 1000 " ms"
 
@@ -14,43 +14,43 @@ Gdip_Shutdown(pToken)
 ExitApp
 
 ;todo
-;change ncords to an array of array of objects instead of array of dictionarys of arrays of objects
-;fix lum by having it return reminder to check for gray path for icon checker
+;posible optimizations:
+; organize text list to most common to least
+; only search nodes that exist
 
 find(allow) {
     nsearch := [{x:657,y:440},{x:763,y:500},{x:763,y:624},{x:658,y:685},{x:553,y:624},{x:553,y:500},{x:720,y:328},{x:836,y:390},{x:899,y:501},{x:899,y:623},{x:836,y:734},{x:720,y:796},{x:596,y:796},{x:480,y:734},{x:417,y:623},{x:417,y:501},{x:480,y:390},{x:596,y:328},{x:658,y:209},{x:838,y:257},{x:969,y:388},{x:1018,y:562},{x:969,y:736},{x:838,y:868},{x:658,y:915},{x:477,y:868},{x:347,y:736},{x:298,y:562},{x:347,y:388},{x:478,y:257}] ; coordinates that will be searched for the icons
-    ncords := [[{x:632,y:449},{x:640,y:391},{x:699,y:420},{x:723,y:447}]] ; coordinates of the paths that each node leads to
-    nbcords := [[{x:615,y:439},{x:,y:},{x:708,y:415},{x:713,y:443}]] ; coordinates of path border to check for gray path
+    ncords := [[[605,440],[640,391],[699,420],[723,447]],[[770,472],[809,480],[838,521],[821,554]],[[823,608],[830,643],[809,682],[773,689]],[[725,717],[701,746],[656,746],[629,720]],[[588,699],[547,686],[517,644],[536,612]],[[536,554],[526,521],[545,479],[604,396]],[[718,304],[783,322]],[[856,361],[902,409]],[[944,481],[964,544]],[[964,620],[945,584]],[[907,755],[858,807]],[[785,843],[716,864]],[[640,861],[569,845]],[[500,808],[449,756]],[[409,689],[390,620]],[[398,542],[408,475]],[[448,410],[499,355]],[[569,320],[642,299]]] ; coordinates of the paths that each node leads to
     nkey := [[17,18,7,8],[7,8,9,10],[9,10,11,12],[11,12,13,14],[13,14,15,16],[15,16,17,18],[19,20],[20,21],[21,22],[22,23],[23,24],[24,25],[25,26],[26,27],[27,28],[28,29],[29,30],[30,19]] ; a key representing which nodes are led to by a node(the index)
     npkey := [[],[],[],[],[],[],[1,2],[1,2],[2,3],[2,3],[3,4],[3,4],[4,5],[4,5],[5,6],[5,6],[1,6],[1,6],[7,18],[7,8],[8,9],[9,10],[10,11],[11,12],[12,13],[13,14],[14,15],[15,16],[16,17],[17,18]] ; a key representing which nodes lead to the node(the index)
     ckey := ""
 
-    while (!A_TimeIdleKeyboard < 10) {
+    while (A_TimeIdle !< 250) { ; fix while loop
         ;unlocked nodes := ""
         ;locked nodes := ""
-        nqueue := []
+        nqueue := [] ; queue of nodes to be clicked
         nodepaths := ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""] ; node tree (path)
+        DllCall("SetCursorPos", "Uint", 0, "Uint", 0) ; get mouse out of the way for screenshot
         pBitmap := Gdip_BitmapFromScreen()
         if A_ScreenHeight != 1080
             pBitmap := Gdip_ResizeBitmap(pBitmap, "w1920 h1080")
 
 
         ; for all the path coordinates, check and build the path
-        for _, obj in ncords {
+        for _, arr in ncords {
             Incords := A_Index
-            for _, cord in obj[Incords] {
-                DllCall("SetCursorPos", "Uint", cord.x, "Uint", cord.y) ; debugging
-                DllCall("gdiplus\GdipBitmapGetPixel", A_PtrSize ? "UPtr" : "UInt", pBitmap, "int", cord.x, "int", cord.y, "uint*", npath) ; read pixel of x and y
-                ;msgbox % Format("{:X}", npath)
-                ;msgbox % lum(npath)
-                ;NOT WORKING-----------
-                nodepaths[Incords] .= p := lum(npath) = "g" || lum(npath) = "t" ? nkey[Incords][A_Index] "," : "" ; some key 1:7,8,17,18
-            }
+            for _, cord in arr {
+                ;DllCall("SetCursorPos", "Uint", cord[1], "Uint", cord[2]) ; debugging
+                DllCall("gdiplus\GdipBitmapGetPixel", A_PtrSize ? "UPtr" : "UInt", pBitmap, "int", cord[1], "int", cord[2], "uint*", npath) ; read pixel of x and y
+                p := lum(npath)
+                ;msgbox % p " " cord[1] " " cord[2]
+                nodepaths[Incords] .= p = "g" || p = "t" ? nkey[Incords][A_Index] "," : "" ; some key 1:7,8,17,18
+            } 
         }
         ;msgbox % arr2str(nodepaths)
 
         for _, obj in nsearch { ; for all of the search areas
-            DllCall("SetCursorPos", "Uint", obj.x, "Uint", obj.y) ; debugging
+            ;DllCall("SetCursorPos", "Uint", obj.x, "Uint", obj.y) ; debugging
                 str := "" ; temp string
                 loop 35 { ; for x
                     w := A_Index - 1 ; save x index
@@ -59,7 +59,6 @@ find(allow) {
                         str .= col(ARGB) ; concatenate "1" if pixel RGB is over 100, otherwise 0
                     }
                 }
-                msgbox % str
             if compare(str, allow) { ; "PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,PABox,PMBox,PCBox,YBox,BBox,PEBox,PKey,GKey,PMap,GMap,PiKey,BBat,BBulb,BLens,GADress,GBat,GBulb,GDress,GSuture,PAgent,PiBulb,PiSy,PLens,YBat,YFila,YGrip,YLens,YOptic,YRoll,YSponge,YScissor,YThread,YWrap,BBand,BTape,BGlove,PiCog,GWrench,GHack,YCutWire,YClamp,YPGlove,YSocket,YSpool,BRag,BScrap,BInstruct,PWRing,PRing,PAmber,PGlass,GToken,YEToken,YBeads,YPearl,BRope,PBead,GCord,GStamp,YJelly,YBead,YMWire,YStamp,YTwine,BAddend,BAmaranth,BBlossom,BCattleTag,BCertifi,BChalk,BClearReagent,BCordage,BFaintReagent,BLaurel,BLeaflet,BPage,BPlate,BRiverRock,BTicket,BWilliam,GAKey,GAmaranth,GBlossom,GBone,GChalk,GCookbook,GCrest,GDamagePhoto,GEnvel,GGlasses,GJigsaw,GLaurel,GLocket,GMask,GNoose,GPartyStream,GPiper,GRealtyKey,GSaltStat,GWeddingPhoto,GWilliam,PBinding,PCoin,PLips,POak,PReagent,PWWard,YAmaranth,YBlossom,YCake,YCattleTag,YChalk,YChildBook,YClapboard,YCoin,YEnvelope,YLaurel,YPage,YPlate,YPouch,YReagent,YReport,YSeparation,YShroud,YSign,YTicket,YUnion,YWilliam,GCrowE,MLetter,GRPD,GMLetter,BBHooks,BAnno,BVigo,BTorn,BGrip,GWard"
                 goal := A_Index
                 nqueue.Push(goal)
@@ -67,15 +66,19 @@ find(allow) {
                 while (goal > 6) {
                     for i, v in npkey[goal] {
                         if InStr(nodepaths[v], goal) {
-                            node := v
-                            nqueue.Push(node)
+                            goal := v
+                            nqueue.InsertAt(0, goal)
                         }
                     }
+                    if A_Index > 2
+                        break
                 }
                 ;send nodes to async clicker
             }
-            ;msgbox % Arr2Str(nqueue)
+        
         }
+        msgbox % Arr2Str2(nqueue)
+        ;break
     }
     Gdip_DisposeImage(pBitmap)
 }
@@ -100,13 +103,16 @@ lum(ARGB) {
     B := ARGB & 255
     G := (ARGB >> 8) & 255
     R :=  (ARGB >> 16) & 255
-    ;msgbox % R " " G " " B
+
+    ;msgbox % R " " G " " B " " c " " R+G+B
     if (R=0)
         return "b"
     if (R+G+B>300)
         return "t"
     if (R>100 && G < 50)
         return "r"
+    if (R+G+B > 160)
+        return "g"
 }
 
 similarity(a,b){ ; -- compare two strings
@@ -201,8 +207,15 @@ Obj2Str(obj) {
 Arr2Str(arr) {
     out:=""
     for k, v in arr
-        out .= v "|"
+        out .= k ": " v "`n"
     return out
+}
+
+Arr2Str2(arr) {
+    out:=""
+    for k, v in arr
+        out .= v " -> "
+    return SubStr(out, 1, StrLen(out)-3)
 }
 
 esc::
