@@ -331,16 +331,11 @@ Gui, Add, Pic, w48 h48 vBFaintReagentI hidden, %A_ScriptDir%\src\Offering\BFaint
 Update_Buttons(Offerings)
 Gui,Show,, Auto Bloodweb
 Return
+
 Start:
+find(Ini_Start())
+msgbox a
 Return
-
-
-
-Click() {
-    Click Down
-    Sleep, 500
-    Click up
-}
 
 guiclose:
     Ini_Write("Items")
@@ -356,5 +351,6 @@ TabChange:
 Return
 
 esc::
+Gdip_DisposeImage(pBitmap)
 Gdip_Shutdown(pToken)
 ExitApp

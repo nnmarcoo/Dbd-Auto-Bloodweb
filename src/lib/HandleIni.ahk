@@ -19,3 +19,13 @@ Update_Buttons(Buttons) {
         GuiControl ,, %key%, %ch%
     }
 }
+
+Ini_Start() {
+    Loop, read, %A_ScriptDir%\src\lib\Settings.ini
+    {
+        val := StrSplit(A_LoopReadLine, "=")
+        if (val[2] = 1)
+            out .= val[1] ","
+    }
+    return out
+}
