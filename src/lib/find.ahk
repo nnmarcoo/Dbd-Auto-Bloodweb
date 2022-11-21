@@ -22,8 +22,11 @@ find(allow) {
     npkey := [[],[],[],[],[],[],[1,2],[1,2],[2,3],[2,3],[3,4],[3,4],[4,5],[4,5],[5,6],[5,6],[1,6],[1,6],[7,18],[7,8],[8,9],[9,10],[10,11],[11,12],[12,13],[13,14],[14,15],[15,16],[16,17],[17,18]] ; a key representing which nodes lead to the node(the index)
     ckey := ""
 
-    while (true) { ; fix while loop
-        WinActivate, DeadByDaylight
+    while (true) {
+        if WinExist("DeadByDaylight")
+            WinActivate
+        else
+            return
         Sleep, 3500
         ;unlocked nodes := ""
         ;locked nodes := ""
