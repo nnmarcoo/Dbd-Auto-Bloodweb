@@ -22,6 +22,12 @@ find(allow) {
     npkey := [[],[],[],[],[],[],[1,2],[1,2],[2,3],[2,3],[3,4],[3,4],[4,5],[4,5],[5,6],[5,6],[1,6],[1,6],[7,18],[7,8],[8,9],[9,10],[10,11],[11,12],[12,13],[13,14],[14,15],[15,16],[16,17],[17,18]] ; a key representing which nodes lead to the node(the index)
     ckey := ""
 
+    multiplier := 1
+    if A_ScreenHeight > 1080
+        multiplier := A_ScreenHeight / 1080
+    else if A_ScreenHeight < 1080
+        multiplier := 1080 / A_ScreenHeight
+
     while (true) {
         if WinExist("DeadByDaylight")
             WinActivate
@@ -81,13 +87,13 @@ find(allow) {
         }
         tooltip % Arr2Str2(nqueue)
         for _, node in nqueue {
-            click(nsearch[node].x+20, nsearch[node].y+20)
+            click(nsearch[node].x*multiplier+20, nsearch[node].y*multiplier+20)
         }
 
         loop {
             try {
                 cords := px(0xFF9c9473)
-                click(cords.x+10,cords.y+20)
+                click(cords.x*multiplier+10,cords.y*multiplier+20)
             } catch e {
                 soundbeep
                 break
