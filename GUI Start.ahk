@@ -333,8 +333,10 @@ Gui,Show,, Auto Bloodweb
 Return
 
 Start:
-find(Ini_Start())
-msgbox a
+    Ini_Write("Items")
+    Ini_Write("Addons")
+    Ini_Write("Offerings")
+    find(Ini_Start())
 Return
 
 guiclose:
