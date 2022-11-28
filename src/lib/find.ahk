@@ -67,23 +67,24 @@ find(allow) {
                 }
             if compare(str, allow) { ; "PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,PABox,PMBox,PCBox,YBox,BBox,PEBox,PKey,GKey,PMap,GMap,PiKey,BBat,BBulb,BLens,GADress,GBat,GBulb,GDress,GSuture,PAgent,PiBulb,PiSy,PLens,YBat,YFila,YGrip,YLens,YOptic,YRoll,YSponge,YScissor,YThread,YWrap,BBand,BTape,BGlove,PiCog,GWrench,GHack,YCutWire,YClamp,YPGlove,YSocket,YSpool,BRag,BScrap,BInstruct,PWRing,PRing,PAmber,PGlass,GToken,YEToken,YBeads,YPearl,BRope,PBead,GCord,GStamp,YJelly,YBead,YMWire,YStamp,YTwine,BAddend,BAmaranth,BBlossom,BCattleTag,BCertifi,BChalk,BClearReagent,BCordage,BFaintReagent,BLaurel,BLeaflet,BPage,BPlate,BRiverRock,BTicket,BWilliam,GAKey,GAmaranth,GBlossom,GBone,GChalk,GCookbook,GCrest,GDamagePhoto,GEnvel,GGlasses,GJigsaw,GLaurel,GLocket,GMask,GNoose,GPartyStream,GPiper,GRealtyKey,GSaltStat,GWeddingPhoto,GWilliam,PBinding,PCoin,PLips,POak,PReagent,PWWard,YAmaranth,YBlossom,YCake,YCattleTag,YChalk,YChildBook,YClapboard,YCoin,YEnvelope,YLaurel,YPage,YPlate,YPouch,YReagent,YReport,YSeparation,YShroud,YSign,YTicket,YUnion,YWilliam,GCrowE,MLetter,GRPD,GMLetter,BBHooks,BAnno,BVigo,BTorn,BGrip,GWard"
                 goal := A_Index
-                nqueue.Push(goal)
+                nqueue.InsertAt(0, goal)
                 ;build node queue vvv
                 while (goal > 6) {
-                    for i, v in npkey[goal] {
-                        if InStr(nodepaths[v], goal) {
-                            goal := v
-                            nqueue.InsertAt(0, goal)
-                            break
+                    for i, v in npkey[goal] { ; for each of the possible paths the node can lead to
+                        if InStr(nodepaths[v], goal) { ; if the possible path contains the actual path
+                            goal := v ; set that as the new goal
+                            nqueue.InsertAt(0, goal) ; add that goal to the beginning of the queue
+                            break ; exit (don't check the other possible paths)
                         }
                     }
                     if A_Index > 2
                         break
                 }
             }
-        
         }
-
+        ;Remove Duplicates from array
+        ;Remove Duplicates from array
+        ;Remove Duplicates from array
         msgbox % Arr2Str2(nqueue)
         for _, node in nqueue {
             click(nsearch[node].x*multiplier+20, nsearch[node].y*multiplier+20)
