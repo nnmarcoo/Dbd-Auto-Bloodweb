@@ -42,7 +42,6 @@ find(allow) {
         if A_ScreenHeight != 1080
             pBitmap := Gdip_ResizeBitmap(pBitmap, "w1920 h1080")
 
-
         ; for all the path coordinates, check and build the path
         for _, arr in ncords {
             Incords := A_Index
@@ -75,16 +74,17 @@ find(allow) {
                         if InStr(nodepaths[v], goal) {
                             goal := v
                             nqueue.InsertAt(0, goal)
+                            break
                         }
                     }
                     if A_Index > 2
                         break
                 }
-                ;send nodes to async clicker
             }
         
         }
-        tooltip % Arr2Str2(nqueue)
+
+        msgbox % Arr2Str2(nqueue)
         for _, node in nqueue {
             click(nsearch[node].x*multiplier+20, nsearch[node].y*multiplier+20)
         }
@@ -132,14 +132,13 @@ lum(ARGB) {
     G := (ARGB >> 8) & 255
     R :=  (ARGB >> 16) & 255
 
-    ;msgbox % R " " G " " B " " c " " R+G+B
     if (R=0)
         return "b"
     if (R+G+B>300)
         return "t"
     if (R>100 && G < 50)
         return "r"
-    if (R+G+B > 160)
+    if (sqrt((R-57)**2+(G-60)**2+(B-66)**2) < 12)
         return "g"
 }
 
