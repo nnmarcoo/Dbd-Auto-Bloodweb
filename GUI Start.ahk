@@ -1,5 +1,4 @@
 ﻿;###TODO
-;finish search algo
 ;add perks? checkbox
 ;add event items checkbox
 #Include %A_ScriptDir%\src\lib\Debug.ahk

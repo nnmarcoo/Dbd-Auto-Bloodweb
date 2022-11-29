@@ -83,7 +83,7 @@ find(allow) {
                 }
             }
         }
-        A.uniq(nqueue) ; remove duplicates
+        nqueue := A.uniq(nqueue) ; remove duplicates
         for _, node in nqueue {
             click(nsearch[node].x*multiplier+20, nsearch[node].y*multiplier+20)
         }
