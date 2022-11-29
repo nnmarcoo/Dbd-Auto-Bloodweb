@@ -8,11 +8,14 @@
 #Include %A_ScriptDir%\src\lib\Interact.ahk
 #Include %A_ScriptDir%\src\lib\Gdip.ahk
 #Include %A_ScriptDir%\src\lib\find.ahk
+#Include %A_ScriptDir%\src\lib\biga.ahk
 #InstallKeybdHook
 
 
 SetBatchLines, -1
-pToken := Gdip_Startup()
+;pToken := Gdip_Startup()
+;A := new biga()
+
 Global Items := Initialize("Items")
 Global Addons := Initialize("Addons")
 Global Offerings := Initialize("Offerings")

@@ -1,6 +1,7 @@
 #InstallKeybdHook
 ;#MaxMem 9000
-pToken := Gdip_Startup() ; start Gdip
+pToken := Gdip_Startup()
+A := new biga()
 
 ;find("PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,")
 
@@ -82,10 +83,7 @@ find(allow) {
                 }
             }
         }
-        ;Remove Duplicates from array
-        ;Remove Duplicates from array
-        ;Remove Duplicates from array
-        msgbox % Arr2Str2(nqueue)
+        A.uniq(nqueue) ; remove duplicates
         for _, node in nqueue {
             click(nsearch[node].x*multiplier+20, nsearch[node].y*multiplier+20)
         }
