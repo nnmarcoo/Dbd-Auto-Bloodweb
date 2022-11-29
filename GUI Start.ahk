@@ -8,12 +8,9 @@
 #Include %A_ScriptDir%\src\lib\Gdip.ahk
 #Include %A_ScriptDir%\src\lib\find.ahk
 #Include %A_ScriptDir%\src\lib\biga.ahk
-#InstallKeybdHook
 
 
 SetBatchLines, -1
-;pToken := Gdip_Startup()
-;A := new biga()
 
 Global Items := Initialize("Items")
 Global Addons := Initialize("Addons")
@@ -345,6 +342,7 @@ guiclose:
     Ini_Write("Items")
     Ini_Write("Addons")
     Ini_Write("Offerings")
+    Gdip_DisposeImage(pBitmap)
     Gdip_Shutdown(pToken)
     ExitApp
 Return
@@ -353,8 +351,3 @@ TabChange:
     Gui, submit, nohide
     Global TabName
 Return
-
-esc::
-Gdip_DisposeImage(pBitmap)
-Gdip_Shutdown(pToken)
-ExitApp
