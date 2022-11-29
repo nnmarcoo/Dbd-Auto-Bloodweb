@@ -1,4 +1,17 @@
-class biga {	; --- Static Variables ---	static throwExceptions := true	static limit := -1	static _guardedMethods := ["ary", "chunk", "every", "fill", "invert", "parseInt", "random", "trim", "reverse"]	static _guardedCallWithOne := ["random"]	static _pathRegex := "/[.\[\]]/"	; --- Instance Variables ---	_uniqueId := 0	; --- Static Methods ---	chunk(param_array,param_size:=1) {
+class biga { ; https://biga-ahk.github.io/biga.ahk/#/
+
+	; --- Static Variables ---
+	static throwExceptions := true
+	static limit := -1
+	static _guardedMethods := ["ary", "chunk", "every", "fill", "invert", "parseInt", "random", "trim", "reverse"]
+	static _guardedCallWithOne := ["random"]
+	static _pathRegex := "/[.\[\]]/"
+
+	; --- Instance Variables ---
+	_uniqueId := 0
+
+	; --- Static Methods ---
+	chunk(param_array,param_size:=1) {
 		if (!isObject(param_array) || !this.isNumber(param_size)) {
 			this._internal_ThrowException()
 		}
@@ -3008,4 +3021,4 @@ class biga {	; --- Static Variables ---	static throwExceptions := true	stati
 		}
 		return l_array
 	}
-}
+}

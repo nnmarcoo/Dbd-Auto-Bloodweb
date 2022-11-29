@@ -1,19 +1,11 @@
-#InstallKeybdHook
-;#MaxMem 9000
+;todo
+;replace nsearch with array of arrays instead of array of objects
+;if special clicked n nodes, stop the list?
+;or if length exceeds something, cut off
+
+#InstallMouseHook
 pToken := Gdip_Startup()
 A := new biga()
-
-;find("PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,")
-
-
-;Gdip_DisposeImage(pBitmap) ;Make sure to free the bitmap when you finish with it
-;Gdip_Shutdown(pToken)
-;ExitApp
-
-;todo
-;posible optimizations:
-; organize text list to most common to least
-; only search nodes that exist
 
 find(allow) {
     nsearch := [{x:657,y:440},{x:763,y:500},{x:763,y:624},{x:658,y:685},{x:553,y:624},{x:553,y:500},{x:720,y:328},{x:836,y:390},{x:899,y:501},{x:899,y:623},{x:836,y:734},{x:720,y:796},{x:596,y:796},{x:480,y:734},{x:417,y:623},{x:417,y:501},{x:480,y:390},{x:596,y:328},{x:658,y:209},{x:838,y:257},{x:969,y:388},{x:1018,y:562},{x:969,y:736},{x:838,y:868},{x:658,y:915},{x:477,y:868},{x:347,y:736},{x:298,y:562},{x:347,y:388},{x:478,y:257}] ; coordinates that will be searched for the icons
@@ -22,20 +14,22 @@ find(allow) {
     npkey := [[],[],[],[],[],[],[1,2],[1,2],[2,3],[2,3],[3,4],[3,4],[4,5],[4,5],[5,6],[5,6],[1,6],[1,6],[7,18],[7,8],[8,9],[9,10],[10,11],[11,12],[12,13],[13,14],[14,15],[15,16],[16,17],[17,18]] ; a key representing which nodes lead to the node(the index)
     ckey := ""
 
+    /*
     multiplier := 1
     if A_ScreenHeight > 1080
         multiplier := A_ScreenHeight / 1080
     else if A_ScreenHeight < 1080
         multiplier := 1080 / A_ScreenHeight
+    */
+    multiplier := A_ScreenHeight > 1080 ? A_ScreenHeight / 1080 : A_ScreenHeight < 1080 ? 1080 / A_ScreenHeight : 1
 
-    while (true) {
+    while (A_TimeIdleMouse > 100) {
         if WinExist("DeadByDaylight")
             WinActivate
         else
             return
         Sleep, 3500
-        ;unlocked nodes := ""
-        ;locked nodes := ""
+
         nqueue := [] ; queue of nodes to be clicked
         nodepaths := ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""] ; node tree (path)
         DllCall("SetCursorPos", "Uint", 0, "Uint", 0) ; get mouse out of the way for screenshot
@@ -43,14 +37,11 @@ find(allow) {
         if A_ScreenHeight != 1080
             pBitmap := Gdip_ResizeBitmap(pBitmap, "w1920 h1080")
 
-        ; for all the path coordinates, check and build the path
-        for _, arr in ncords {
+        for _, arr in ncords { ; for all the path coordinates, check and build the path
             Incords := A_Index
             for _, cord in arr {
-                ;DllCall("SetCursorPos", "Uint", cord[1], "Uint", cord[2]) ; debugging
                 DllCall("gdiplus\GdipBitmapGetPixel", A_PtrSize ? "UPtr" : "UInt", pBitmap, "int", cord[1], "int", cord[2], "uint*", npath) ; read pixel of x and y
                 p := lum(npath)
-                ;msgbox % p " " cord[1] " " cord[2]
                 nodepaths[Incords] .= p = "g" || p = "t" ? nkey[Incords][A_Index] "," : "" ; some key 1:7,8,17,18
             } 
         }
@@ -83,8 +74,8 @@ find(allow) {
                 }
             }
         }
-        nqueue := A.uniq(nqueue) ; remove duplicates
-        for _, node in nqueue {
+        ;nqueue := A.uniq(nqueue)
+        for _, node in A.uniq(nqueue) { ; remove duplicates
             click(nsearch[node].x*multiplier+20, nsearch[node].y*multiplier+20)
         }
 
@@ -112,21 +103,10 @@ click(x, y) {
 }
 
 col(ARGB) { ; -- if all RGB values are above 100, return 1, otherwise return 0
-    /*
-    if ARGB & 255 > 100 ; if B is > 100
-        if (ARGB >> 8) & 255 > 100 ; if G is > 100
-            if (ARGB >> 16) & 255 > 100 ; if R is > 100
-                return "1"
-    return "0"
-    */
-    return ARGB & 255 > 100 && (ARGB >> 8) & 255 > 100 && (ARGB >> 16) & 255 > 100 ? "1" : "0"
+    return ARGB & 255 > 100 && (ARGB >> 8) & 255 > 100 && (ARGB >> 16) & 255 > 100 ? "1" : "0" ; B G R
 }
 
 lum(ARGB) {
-    ;black = 0,0,0
-    ;gray = 56,58,61
-    ;tan = 132,117,90
-    ;red =214,0,0
     B := ARGB & 255
     G := (ARGB >> 8) & 255
     R :=  (ARGB >> 16) & 255
@@ -246,8 +226,3 @@ Arr2Str2(arr) {
         out .= v " -> "
     return SubStr(out, 1, StrLen(out)-3)
 }
-
-;esc::
-;Gdip_DisposeImage(pBitmap) ;Make sure to free the bitmap when you finish with it
-;Gdip_Shutdown(pToken)
-;exitapp
