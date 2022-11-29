@@ -1,7 +1,9 @@
 ;todo
-;replace nsearch with array of arrays instead of array of objects
+; replace nsearch with array of arrays instead of array of objects
 ;if special clicked n nodes, stop the list?
 ;or if length exceeds something, cut off
+
+; add hashing to string comparison (CRC32)
 
 #InstallMouseHook
 pToken := Gdip_Startup()
@@ -119,6 +121,14 @@ lum(ARGB) {
         return "r"
     if (sqrt((R-57)**2+(G-60)**2+(B-66)**2) < 12)
         return "g"
+}
+
+CRC32(str, enc := "UTF-8") ; by jNizM
+{
+	size := (StrPut(str, enc) - 1) * (len := (enc = "CP1200" || enc = "UTF-16") ? 2 : 1)
+	VarSetCapacity(buf, size, 0) &&	StrPut(str, &buf, Floor(size / len), enc)
+	crc := DllCall("ntdll\RtlComputeCrc32", "uint", 0, "ptr", &buf, "uint", size, "uint")
+	return Format("{:x}", crc)
 }
 
 similarity(a,b){ ; -- compare two strings
