@@ -24,13 +24,13 @@ find(allow) {
         multiplier := 1080 / A_ScreenHeight
     */
     multiplier := A_ScreenHeight > 1080 ? A_ScreenHeight / 1080 : A_ScreenHeight < 1080 ? 1080 / A_ScreenHeight : 1
-
+    Sleep, 300
     while (A_TimeIdleMouse > 100) {
         if WinExist("DeadByDaylight")
             WinActivate
         else
             return
-        Sleep, 3500
+        Sleep, 3200
 
         nqueue := [] ; queue of nodes to be clicked
         nodepaths := ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""] ; node tree (path)
@@ -47,7 +47,6 @@ find(allow) {
                 nodepaths[Incords] .= p = "g" || p = "t" ? nkey[Incords][A_Index] "," : "" ; some key 1:7,8,17,18
             } 
         }
-        ;msgbox % arr2str(nodepaths)
 
         for _, obj in nsearch { ; for all of the search areas
             ;DllCall("SetCursorPos", "Uint", obj.x, "Uint", obj.y) ; debugging
@@ -76,22 +75,24 @@ find(allow) {
                 }
             }
         }
-        ;nqueue := A.uniq(nqueue)
         for _, node in A.uniq(nqueue) { ; remove duplicates
+            if A_TimeIdleMouse < 200  ; bad solution
+                break
             click(nsearch[node].x*multiplier+20, nsearch[node].y*multiplier+20)
         }
 
         loop {
+            if A_TimeIdleMouse < 200 ; bad solution
+                break
             try {
                 cords := px(0xFF9c9473)
                 click(cords.x*multiplier+10,cords.y*multiplier+20)
             } catch e {
-                soundbeep
                 break
             }
         }
-        ;break
     }
+    DllCall("SetCursorPos", "Uint", A_ScreenWidth/2, "Uint", A_ScreenHeight/2)
     Gdip_DisposeImage(pBitmap)
 }
 
@@ -123,8 +124,7 @@ lum(ARGB) {
         return "g"
 }
 
-CRC32(str, enc := "UTF-8") ; by jNizM
-{
+CRC32(str, enc := "UTF-8") { ; by jNizM
 	size := (StrPut(str, enc) - 1) * (len := (enc = "CP1200" || enc = "UTF-16") ? 2 : 1)
 	VarSetCapacity(buf, size, 0) &&	StrPut(str, &buf, Floor(size / len), enc)
 	crc := DllCall("ntdll\RtlComputeCrc32", "uint", 0, "ptr", &buf, "uint", size, "uint")
@@ -154,8 +154,9 @@ compare(str,nodes) { ; -- compare input icon with data set and return matching p
 
         if !InStr(nodes, data[1]) ; if we don't need it, skip it
             Continue
-        if (min = 100) ; if we found a match already, return
+        if (min = 100) { ; if we found a match already, return
             return best
+        }
 
         if ((compare := similarity(str, data[2])) > min) { ; if it is the best match so far, set as best
             min := compare

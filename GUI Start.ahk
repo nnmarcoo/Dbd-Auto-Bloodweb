@@ -8,6 +8,7 @@
 #Include %A_ScriptDir%\src\lib\Gdip.ahk
 #Include %A_ScriptDir%\src\lib\find.ahk
 #Include %A_ScriptDir%\src\lib\biga.ahk
+#Persistent
 
 
 SetBatchLines, -1
