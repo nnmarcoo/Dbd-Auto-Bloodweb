@@ -30,7 +30,7 @@ find(allow) {
             WinActivate
         else
             return
-        Sleep, 3200
+        Sleep, 4000
 
         nqueue := [] ; queue of nodes to be clicked
         nodepaths := ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""] ; node tree (path)
