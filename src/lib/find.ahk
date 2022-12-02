@@ -23,7 +23,7 @@ find(allow) {
     else if A_ScreenHeight < 1080
         multiplier := 1080 / A_ScreenHeight
     */
-    multiplier := A_ScreenHeight > 1080 ? A_ScreenHeight / 1080 : A_ScreenHeight < 1080 ? 1080 / A_ScreenHeight : 1
+    m := A_ScreenHeight > 1080 ? A_ScreenHeight / 1080 : A_ScreenHeight < 1080 ? 1080 / A_ScreenHeight : 1
     Sleep, 300
     while (A_TimeIdleMouse > 100) {
         if WinExist("DeadByDaylight")
@@ -78,7 +78,7 @@ find(allow) {
         for _, node in A.uniq(nqueue) { ; remove duplicates
             if A_TimeIdleMouse < 200  ; bad solution
                 break
-            click(nsearch[node].x*multiplier+20, nsearch[node].y*multiplier+20)
+            click((nsearch[node].x+15)*m, (nsearch[node].y+15)*m)
         }
 
         loop {
@@ -86,7 +86,7 @@ find(allow) {
                 break
             try {
                 cords := px(0xFF9c9473)
-                click(cords.x*multiplier+10,cords.y*multiplier+20)
+                click((cords.x*+10)*m,(cords.y*+20)*m)
             } catch e {
                 break
             }
