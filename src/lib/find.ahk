@@ -76,12 +76,14 @@ find(allow) {
             }
         }
         for _, node in A.uniq(nqueue) { ; remove duplicates
+            tooltip % Arr2Str2(A.uniq(nqueue))
             if A_TimeIdleMouse < 200  ; bad solution
                 break
             click((nsearch[node].x+15)*m, (nsearch[node].y+15)*m)
         }
 
         loop {
+            tooltip % "random nodes"
             if A_TimeIdleMouse < 200 ; bad solution
                 break
             try {
