@@ -86,7 +86,7 @@ find(allow) {
                 break
             try {
                 cords := px(0xFF9c9473)
-                click((cords.x*+10)*m,(cords.y*+20)*m)
+                click((cords.x+15)*m,(cords.y+15)*m)
             } catch e {
                 break
             }
