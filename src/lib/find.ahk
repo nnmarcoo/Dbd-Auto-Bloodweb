@@ -23,7 +23,8 @@ find(allow) {
     else if A_ScreenHeight < 1080
         multiplier := 1080 / A_ScreenHeight
     */
-    m := A_ScreenHeight > 1080 ? A_ScreenHeight / 1080 : A_ScreenHeight < 1080 ? 1080 / A_ScreenHeight : 1
+    mh := A_ScreenHeight != 1080 ? A_ScreenHeight / 1080 : 1
+    mw := A_ScreenWidth != 1080 ? A_ScreenWidth / 1080 : 1
     Sleep, 300
     while (A_TimeIdleMouse > 100) {
         if WinExist("DeadByDaylight")
@@ -79,7 +80,7 @@ find(allow) {
             tooltip % Arr2Str2(A.uniq(nqueue))
             if A_TimeIdleMouse < 200  ; bad solution
                 break
-            click((nsearch[node].x+15)*m, (nsearch[node].y+15)*m)
+            click((nsearch[node].x+15)*mw, (nsearch[node].y+15)*mh)
         }
 
         loop {
@@ -88,7 +89,7 @@ find(allow) {
                 break
             try {
                 cords := px(0xFF9c9473)
-                click((cords.x+15)*m,(cords.y+15)*m)
+                click((cords.x+15)*mw,(cords.y+15)*mh)
             } catch e {
                 break
             }
