@@ -24,7 +24,7 @@ find(allow) {
         multiplier := 1080 / A_ScreenHeight
     */
     mh := A_ScreenHeight != 1080 ? A_ScreenHeight / 1080 : 1
-    mw := A_ScreenWidth != 1080 ? A_ScreenWidth / 1080 : 1
+    mw := A_ScreenWidth != 1920 ? A_ScreenWidth / 1920 : 1
     Sleep, 300
     while (A_TimeIdleMouse > 100) {
         if WinExist("DeadByDaylight")
@@ -97,6 +97,7 @@ find(allow) {
     }
     DllCall("SetCursorPos", "Uint", A_ScreenWidth/2, "Uint", A_ScreenHeight/2)
     Gdip_DisposeImage(pBitmap)
+    tooltip
 }
 
 click(x, y) {
