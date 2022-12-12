@@ -7,7 +7,6 @@
 #Include %A_ScriptDir%\src\lib\Interact.ahk
 #Include %A_ScriptDir%\src\lib\Gdip.ahk
 #Include %A_ScriptDir%\src\lib\find.ahk
-#Include %A_ScriptDir%\src\lib\biga.ahk
 #Persistent
 
 

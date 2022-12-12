@@ -7,7 +7,6 @@
 
 #InstallMouseHook
 pToken := Gdip_Startup()
-A := new biga()
 
 find(allow) {
     nsearch := [{x:657,y:440},{x:763,y:500},{x:763,y:624},{x:658,y:685},{x:553,y:624},{x:553,y:500},{x:720,y:328},{x:836,y:390},{x:899,y:501},{x:899,y:623},{x:836,y:734},{x:720,y:796},{x:596,y:796},{x:480,y:734},{x:417,y:623},{x:417,y:501},{x:480,y:390},{x:596,y:328},{x:658,y:209},{x:838,y:257},{x:969,y:388},{x:1018,y:562},{x:969,y:736},{x:838,y:868},{x:658,y:915},{x:477,y:868},{x:347,y:736},{x:298,y:562},{x:347,y:388},{x:478,y:257}] ; coordinates that will be searched for the icons
@@ -60,6 +59,7 @@ find(allow) {
                     }
                 }
             if compare(str, allow) { ; "PFlash,GFlash,YFlash,PMed,GMed,YMed,BMed,PABox,PMBox,PCBox,YBox,BBox,PEBox,PKey,GKey,PMap,GMap,PiKey,BBat,BBulb,BLens,GADress,GBat,GBulb,GDress,GSuture,PAgent,PiBulb,PiSy,PLens,YBat,YFila,YGrip,YLens,YOptic,YRoll,YSponge,YScissor,YThread,YWrap,BBand,BTape,BGlove,PiCog,GWrench,GHack,YCutWire,YClamp,YPGlove,YSocket,YSpool,BRag,BScrap,BInstruct,PWRing,PRing,PAmber,PGlass,GToken,YEToken,YBeads,YPearl,BRope,PBead,GCord,GStamp,YJelly,YBead,YMWire,YStamp,YTwine,BAddend,BAmaranth,BBlossom,BCattleTag,BCertifi,BChalk,BClearReagent,BCordage,BFaintReagent,BLaurel,BLeaflet,BPage,BPlate,BRiverRock,BTicket,BWilliam,GAKey,GAmaranth,GBlossom,GBone,GChalk,GCookbook,GCrest,GDamagePhoto,GEnvel,GGlasses,GJigsaw,GLaurel,GLocket,GMask,GNoose,GPartyStream,GPiper,GRealtyKey,GSaltStat,GWeddingPhoto,GWilliam,PBinding,PCoin,PLips,POak,PReagent,PWWard,YAmaranth,YBlossom,YCake,YCattleTag,YChalk,YChildBook,YClapboard,YCoin,YEnvelope,YLaurel,YPage,YPlate,YPouch,YReagent,YReport,YSeparation,YShroud,YSign,YTicket,YUnion,YWilliam,GCrowE,MLetter,GRPD,GMLetter,BBHooks,BAnno,BVigo,BTorn,BGrip,GWard"
+                tooltip % Arr2Str2(nqueue)
                 goal := A_Index
                 nqueue.InsertAt(0, goal)
                 ;build node queue vvv
@@ -76,19 +76,19 @@ find(allow) {
                 }
             }
         }
-        for _, node in A.uniq(nqueue) { ; remove duplicates
-            tooltip % Arr2Str2(A.uniq(nqueue))
+        for _, node in RemoveDup(nqueue) { ; remove duplicates
+            tooltip % Arr2Str2(RemoveDup(nqueue)) "`n(" nsearch[node].x+15 ", " nsearch[node].y+15 ")`n(" (nsearch[node].x+15)*mw ", " (nsearch[node].y+15)*mh ")"
             if A_TimeIdleMouse < 200  ; bad solution
                 break
             click((nsearch[node].x+15)*mw, (nsearch[node].y+15)*mh)
         }
 
         loop {
-            tooltip % "random nodes"
             if A_TimeIdleMouse < 200 ; bad solution
                 break
             try {
                 cords := px(0xFF9c9473)
+                tooltip % "random nodes`n(" cords.x+15 ", " cords.y+15 ")`n(" (cords.x+15)*mw ", " (cords.y+15)*mh ")"
                 click((cords.x+15)*mw,(cords.y+15)*mh)
             } catch e {
                 break
@@ -97,7 +97,7 @@ find(allow) {
     }
     DllCall("SetCursorPos", "Uint", A_ScreenWidth/2, "Uint", A_ScreenHeight/2)
     Gdip_DisposeImage(pBitmap)
-    tooltip
+    ;tooltip
 }
 
 click(x, y) {
@@ -133,6 +133,20 @@ CRC32(str, enc := "UTF-8") { ; by jNizM
 	VarSetCapacity(buf, size, 0) &&	StrPut(str, &buf, Floor(size / len), enc)
 	crc := DllCall("ntdll\RtlComputeCrc32", "uint", 0, "ptr", &buf, "uint", size, "uint")
 	return Format("{:x}", crc)
+}
+
+RemoveDup(obj) {
+	for i, value in obj
+		str.=value "`n"
+	nodupArray:={}
+	nodup:= "`n" 									; Added delimiter
+	loop parse, str, `n
+		if !InStr(nodup,  "`n"  A_LoopField "`n" )	; Added delimiter
+		{
+			nodup.=A_LoopField "`n"
+			nodupArray.Push(A_LoopField)
+		}
+	Return nodupArray
 }
 
 similarity(a,b){ ; -- compare two strings
