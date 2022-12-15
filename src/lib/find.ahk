@@ -78,7 +78,7 @@ find(allow) {
             }
         }
         for _, node in RemoveDup(nqueue) { ; remove duplicates
-            tooltip % Arr2Str2(RemoveDup(nqueue)) "`n(" nsearch[node].x+15 ", " nsearch[node].y+15 ")`n(" (nsearch[node].x+15)*mw ", " (nsearch[node].y+15)*mh ")"
+            ;tooltip % Arr2Str2(RemoveDup(nqueue)) "`n(" nsearch[node].x+15 ", " nsearch[node].y+15 ")`n(" (nsearch[node].x+15)*mw ", " (nsearch[node].y+15)*mh ")"
             if A_TimeIdleMouse < 200  ; bad solution
                 break
             click((nsearch[node].x+15)*mw, (nsearch[node].y+15)*mh)
@@ -89,7 +89,7 @@ find(allow) {
                 break
             try {
                 cords := px(0xFF9c9473)
-                tooltip % "random nodes`n(" cords.x+15 ", " cords.y+15 ")`n(" (cords.x+15)*mw ", " (cords.y+15)*mh ")"
+                ;tooltip % "random nodes`n(" cords.x+15 ", " cords.y+15 ")`n(" (cords.x+15)*mw ", " (cords.y+15)*mh ")"
                 click(cords.x+(15*mw),cords.y+(15*mh))
             } catch e {
                 break
@@ -98,7 +98,7 @@ find(allow) {
     }
     DllCall("SetCursorPos", "Uint", A_ScreenWidth/2, "Uint", A_ScreenHeight/2)
     Gdip_DisposeImage(pBitmap)
-    tooltip
+    ;tooltip
 }
 
 click(x, y) {
