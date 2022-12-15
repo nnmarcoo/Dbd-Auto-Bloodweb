@@ -35,9 +35,10 @@ find(allow) {
         nqueue := [] ; queue of nodes to be clicked
         nodepaths := ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""] ; node tree (path)
         DllCall("SetCursorPos", "Uint", 0, "Uint", 0) ; get mouse out of the way for screenshot
-        pBitmap := Gdip_BitmapFromScreen()
+        pBitmap := Gdip_BitmapFromScreen(1)
         if A_ScreenHeight != 1080
-            pBitmap := Gdip_ResizeBitmap(pBitmap, "w1920 h1080")
+            pBitmap := Gdip_ResizeBitmap(pBitmap, "h1080")
+        ;Gdip_SaveBitmapToFile(pBitmap, "lores.png", 100)
 
         for _, arr in ncords { ; for all the path coordinates, check and build the path
             Incords := A_Index
@@ -89,7 +90,7 @@ find(allow) {
             try {
                 cords := px(0xFF9c9473)
                 tooltip % "random nodes`n(" cords.x+15 ", " cords.y+15 ")`n(" (cords.x+15)*mw ", " (cords.y+15)*mh ")"
-                click((cords.x+15)*mw,(cords.y+15)*mh)
+                click(cords.x+(15*mw),cords.y+(15*mh))
             } catch e {
                 break
             }
@@ -97,7 +98,7 @@ find(allow) {
     }
     DllCall("SetCursorPos", "Uint", A_ScreenWidth/2, "Uint", A_ScreenHeight/2)
     Gdip_DisposeImage(pBitmap)
-    ;tooltip
+    tooltip
 }
 
 click(x, y) {

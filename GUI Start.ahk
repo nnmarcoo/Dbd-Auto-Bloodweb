@@ -9,6 +9,11 @@
 #Include %A_ScriptDir%\src\lib\find.ahk
 #Persistent
 
+if (RegExReplace(A_ScreenWidth / A_ScreenHeight,"(\.\d{2})\d*","$1") != 1.77) {
+    msgbox This tool requires 16:9 aspect ratio!
+    ExitApp
+}
+
 
 SetBatchLines, -1
 
