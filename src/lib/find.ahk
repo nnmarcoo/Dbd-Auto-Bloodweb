@@ -90,7 +90,7 @@ find(allow) {
             try {
                 cords := px(0xFF9c9473)
                 ;tooltip % "random nodes`n(" cords.x+15 ", " cords.y+15 ")`n(" (cords.x+15)*mw ", " (cords.y+15)*mh ")"
-                click(cords.x+(15*mw),cords.y+(15*mh))
+                click(cords.x+(7*mw),cords.y+(15*mh))
             } catch e {
                 break
             }
