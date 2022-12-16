@@ -1,10 +1,3 @@
-;todo
-; replace nsearch with array of arrays instead of array of objects
-;if special clicked n nodes, stop the list?
-;or if length exceeds something, cut off
-
-; add hashing to string comparison (CRC32)
-
 #InstallMouseHook
 pToken := Gdip_Startup()
 
@@ -15,13 +8,6 @@ find(allow) {
     npkey := [[],[],[],[],[],[],[1,2],[1,2],[2,3],[2,3],[3,4],[3,4],[4,5],[4,5],[5,6],[5,6],[1,6],[1,6],[7,18],[7,8],[8,9],[9,10],[10,11],[11,12],[12,13],[13,14],[14,15],[15,16],[16,17],[17,18]] ; a key representing which nodes lead to the node(the index)
     ckey := ""
 
-    /*
-    multiplier := 1
-    if A_ScreenHeight > 1080
-        multiplier := A_ScreenHeight / 1080
-    else if A_ScreenHeight < 1080
-        multiplier := 1080 / A_ScreenHeight
-    */
     mh := A_ScreenHeight != 1080 ? A_ScreenHeight / 1080 : 1
     mw := A_ScreenWidth != 1920 ? A_ScreenWidth / 1920 : 1
     Sleep, 300
@@ -38,7 +24,6 @@ find(allow) {
         pBitmap := Gdip_BitmapFromScreen(1)
         if A_ScreenHeight != 1080
             pBitmap := Gdip_ResizeBitmap(pBitmap, "h1080")
-        ;Gdip_SaveBitmapToFile(pBitmap, "lores.png", 100)
 
         for _, arr in ncords { ; for all the path coordinates, check and build the path
             Incords := A_Index

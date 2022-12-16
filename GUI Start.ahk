@@ -1,6 +1,22 @@
-﻿;###TODO
-;add perks? checkbox
-;add event items checkbox
+﻿/*
+//==================================
+// AUTHOR       : Marco Todorov
+// CREATE DATE  : 7/24/2022
+// LAST MODIFIED: 12/23/2022
+// PURPOSE      : Automate DBD Bloodweb
+// SPECIAL NOTES: 
+// VERSION      : 0.1.0
+// ===============================
+// TODO:
+// add perks? checkbox
+// add event items checkbox
+// replace nsearch with array of arrays instead of array of objects
+// if special clicked n nodes, stop the list?
+// or if length exceeds something, cut off
+
+// maybe add hashing to string comparison (CRC32)
+//==================================
+*/
 #Include %A_ScriptDir%\src\lib\Debug.ahk
 #Include %A_ScriptDir%\src\lib\HandleIni.ahk
 #Include %A_ScriptDir%\src\lib\ValChar.ahk
