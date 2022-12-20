@@ -10,13 +10,13 @@ find(allow) {
 
     mh := A_ScreenHeight != 1080 ? A_ScreenHeight / 1080 : 1
     mw := A_ScreenWidth != 1920 ? A_ScreenWidth / 1920 : 1
-    Sleep, 300
+    Sleep, 500
     while (A_TimeIdleMouse > 100) {
         if WinExist("DeadByDaylight")
             WinActivate
         else
             return
-        Sleep, 4000
+        Sleep, 3800
 
         nqueue := [] ; queue of nodes to be clicked
         nodepaths := ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""] ; node tree (path)
@@ -28,6 +28,7 @@ find(allow) {
         for _, arr in ncords { ; for all the path coordinates, check and build the path
             Incords := A_Index
             for _, cord in arr {
+                ;DllCall("SetCursorPos", "Uint", cord[1], "Uint", cord[2])
                 DllCall("gdiplus\GdipBitmapGetPixel", A_PtrSize ? "UPtr" : "UInt", pBitmap, "int", cord[1], "int", cord[2], "uint*", npath) ; read pixel of x and y
                 p := lum(npath)
                 nodepaths[Incords] .= p = "g" || p = "t" ? nkey[Incords][A_Index] "," : "" ; some key 1:7,8,17,18
@@ -104,13 +105,15 @@ lum(ARGB) {
     G := (ARGB >> 8) & 255
     R :=  (ARGB >> 16) & 255
 
+    ;msgbox % sqrt((R-57)**2+(G-60)**2+(B-66)**2)
+
     if (R=0)
         return "b"
     if (R+G+B>300)
         return "t"
     if (R>100 && G < 50)
         return "r"
-    if (sqrt((R-57)**2+(G-60)**2+(B-66)**2) < 12)
+    if (sqrt((R-57)**2+(G-60)**2+(B-66)**2) < 6)
         return "g"
 }
 
