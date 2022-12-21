@@ -18,5 +18,3 @@ Some inspiration was taken from [IIInitiationnn](https://github.com/IIInitiation
  - Option for random nodes only
 ## Issues
  - Some icons are unrecognized
- - Larger res monitors can't click node #30
- - Some paths don't work on larger res monitors
