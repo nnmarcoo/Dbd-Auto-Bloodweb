@@ -67,7 +67,10 @@ find(allow) {
             ;tooltip % Arr2Str2(RemoveDup(nqueue)) "`n(" nsearch[node].x+15 ", " nsearch[node].y+15 ")`n(" (nsearch[node].x+15)*mw ", " (nsearch[node].y+15)*mh ")"
             if A_TimeIdleMouse < 200  ; bad solution
                 break
-            click((nsearch[node].x+15)*mw, (nsearch[node].y+15)*mh)
+            if node = 30 ; botched fix for node 30 not working on larger monitors
+                click((nsearch[node].x+7)*mw, (nsearch[node].y+7)*mh)
+            else
+                click((nsearch[node].x+15)*mw, (nsearch[node].y+15)*mh)
         }
 
         loop {

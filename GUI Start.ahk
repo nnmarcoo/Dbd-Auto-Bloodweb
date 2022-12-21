@@ -5,7 +5,7 @@
 // LAST MODIFIED: 12/23/2022
 // PURPOSE      : Automate DBD Bloodweb
 // SPECIAL NOTES: 
-// VERSION      : 0.1.0
+// VERSION      : 0.1.2
 // ===============================
 // TODO:
 // add perks? checkbox
