@@ -18,3 +18,4 @@ Some inspiration was taken from [IIInitiationnn](https://github.com/IIInitiation
  - Option for random nodes only
 ## Issues
  - Some icons are unrecognized
+ - Node 4 path is broken
